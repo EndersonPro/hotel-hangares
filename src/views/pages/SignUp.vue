@@ -128,7 +128,22 @@
             <b-card no-body class="p-4">
               <b-card-body>
                 <b-form @submit.prevent="handlerSubmit">
-                  <h1>REGISTRARSE</h1>
+                  <h2 class="text-center">REGISTRARSE</h2>
+                  <b-input-group class="mb-3">
+                    <b-input-group-prepend>
+                      <b-input-group-text>
+                        <i class="fa fa-user fa-lg"></i>
+                      </b-input-group-text>
+                    </b-input-group-prepend>
+                    <b-form-input
+                      type="text"
+                      v-model="$v.form.nombre.$model"
+                      :state="$v.form.nombre.$dirty ? !$v.form.nombre.$error : null"
+                      class="form-control"
+                      placeholder="Nombres"
+                    />
+                    <b-form-invalid-feedback id="input-1-live-feedback">Este campo es requerido</b-form-invalid-feedback>
+                  </b-input-group>
                   <b-input-group class="mb-3">
                     <b-input-group-prepend>
                       <b-input-group-text>
@@ -141,7 +156,7 @@
                       :state="$v.form.email.$dirty ? !$v.form.email.$error : null"
                       class="form-control"
                       placeholder="Correo"
-                      autocomplete="username email"
+                      autocomplete="email"
                     />
                     <b-form-invalid-feedback id="input-1-live-feedback">Este campo es requerido</b-form-invalid-feedback>
                   </b-input-group>
@@ -158,7 +173,6 @@
                       class="form-control"
                       :state="$v.form.phone.$dirty ? !$v.form.phone.$error : null"
                       placeholder="Teléfono"
-                      autocomplete="username email"
                     />
                     <b-form-invalid-feedback id="input-1-live-feedback">Este campo es requerido</b-form-invalid-feedback>
                   </b-input-group>
@@ -176,14 +190,39 @@
                       placeholder="Contraseña"
                       autocomplete="current-password"
                     />
-                    <b-form-invalid-feedback id="input-1-live-feedback">La contraseña debe tener al menos 6 caracteres.</b-form-invalid-feedback>
+                    <b-form-invalid-feedback
+                      id="input-1-live-feedback"
+                    >La contraseña debe tener al menos 6 caracteres.</b-form-invalid-feedback>
+                  </b-input-group>
+                  <b-input-group class="mb-4">
+                    <b-input-group-prepend>
+                      <b-input-group-text>
+                        <i class="icon-lock"></i>
+                      </b-input-group-text>
+                    </b-input-group-prepend>
+                    <b-form-input
+                      type="password"
+                      class="form-control"
+                      v-model="$v.form.repeat_password.$model"
+                      :state="$v.form.repeat_password.$dirty ? !$v.form.repeat_password.$error : null"
+                      placeholder="Contraseña"
+                      autocomplete="current-password"
+                    />
+                    <b-form-invalid-feedback
+                      id="input-1-live-feedback"
+                    >Las contraseñas no coinciden.</b-form-invalid-feedback>
                   </b-input-group>
                   <b-row>
                     <b-col cols="6">
-                      <b-button type="submit" :disabled="$v.form.$invalid" variant="primary" class="px-4">Registrarse</b-button>
+                      <b-button
+                        type="submit"
+                        :disabled="$v.form.$invalid"
+                        variant="primary"
+                        class="px-4"
+                      >Registrarse</b-button>
                     </b-col>
                     <b-col cols="6" class="text-right">
-                      <b-button  variant="link" class="px-0">Forgot password?</b-button>
+                      <b-button variant="link" class="px-0">Forgot password?</b-button>
                     </b-col>
                   </b-row>
                 </b-form>
@@ -197,27 +236,38 @@
 </template>
 
 <script>
-import { required, minLength, between } from "vuelidate/lib/validators";
+import { required, minLength, between, sameAs } from "vuelidate/lib/validators";
+import { isEmailAvailable } from "@/helpers/validators";
+import axios from "axios";
 
 export default {
   name: "SignUp",
   data() {
     return {
       form: {
+        nombre: null,
         email: null,
         password: null,
+        repeat_password: null,
         phone: null
       }
     };
   },
   validations: {
     form: {
-      email: {
+      nombre: {
         required
+      },
+      email: {
+        required,
+        isEmailAvailable
       },
       password: {
         required,
         minLength: minLength(6)
+      },
+      repeat_password: {
+        sameAsPassword: sameAs("password")
       },
       phone: {
         required
@@ -229,6 +279,30 @@ export default {
       this.$v.$touch();
       if (this.$v.$invalid) {
         console.log("Invalido");
+      } else {
+        // console.log(this.form);
+        axios
+          .post(
+            "http://localhost:8000/api/v1.0/users/",
+            {
+              nombres: this.form.nombre,
+              phone: this.form.phone,
+              password: this.form.password,
+              email: this.form.email,
+              username: this.form.nombre.trim()
+            },
+            {
+              headers: {
+                "Content-Type": "application/json",
+                "Bearer":
+                  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTcyMjQ2OTE5LCJqdGkiOiIwNmVkMGNkY2ExYWI0YTI5ODM4MzkxOGEyN2Y4NDRlNyIsInVzZXJfaWQiOjEsInVzZXJuYW1lIjoiZW5kZXJzb25wcm8ifQ.AT4PKOCPhjdKr1oU6FXVr611vUDmY4d4KXFbMcp16Uo",
+                "Authorization":
+                  "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTcyMjQ2OTE5LCJqdGkiOiIwNmVkMGNkY2ExYWI0YTI5ODM4MzkxOGEyN2Y4NDRlNyIsInVzZXJfaWQiOjEsInVzZXJuYW1lIjoiZW5kZXJzb25wcm8ifQ.AT4PKOCPhjdKr1oU6FXVr611vUDmY4d4KXFbMcp16Uo"
+              }
+            }
+          )
+          .then(data => console.log)
+          .catch(err => console.log);
       }
     }
   }

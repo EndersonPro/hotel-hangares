@@ -7,7 +7,7 @@
       <b-row>
         <b-col cols="12">
           <span class="_title">HOTEL</span>
-          <span class="_title" style="padding:0 .1em;">
+          <span class="_title" >
             <svg
               width="4"
               height="69"
