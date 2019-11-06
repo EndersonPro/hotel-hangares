@@ -1,10 +1,25 @@
 <template>
-  <router-view></router-view>
+  <transition :name="transitionName">
+    <router-view></router-view>
+  </transition>
 </template>
 
 <script>
 export default {
-  name: "app"
+  name: "app",
+  data() {
+    return {
+      transitionName: ""
+    };
+  },
+  watch: {
+    '$route' (to, from) {
+      console.log("ABER");
+      const toDepth = to.path.split("/").length;
+      const fromDepth = from.path.split("/").length;
+      this.transitionName = toDepth < fromDepth ? "slide-right" : "slide-left";
+    }
+  }
 };
 </script>
 
@@ -25,6 +40,6 @@ $simple-line-font-path: "~simple-line-icons/fonts/";
 // Import Main styles for this application
 @import "assets/scss/style";
 * {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 </style>

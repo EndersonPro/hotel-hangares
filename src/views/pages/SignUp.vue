@@ -205,7 +205,7 @@
                       class="form-control"
                       v-model="$v.form.repeat_password.$model"
                       :state="$v.form.repeat_password.$dirty ? !$v.form.repeat_password.$error : null"
-                      placeholder="Contraseña"
+                      placeholder="Repetir Contraseña"
                       autocomplete="current-password"
                     />
                     <b-form-invalid-feedback
@@ -213,17 +213,23 @@
                     >Las contraseñas no coinciden.</b-form-invalid-feedback>
                   </b-input-group>
                   <b-row>
-                    <b-col cols="6">
+                    <b-col cols="7">
                       <b-button
                         type="submit"
                         :disabled="$v.form.$invalid"
                         variant="primary"
                         class="px-4"
                       >Registrarse</b-button>
+                      <b-spinner
+                        v-show="getIsLoading"
+                        style="width: 1.5rem; height: 1.5rem;"
+                        label="Large Spinner"
+                        type="grow"
+                      ></b-spinner>
                     </b-col>
-                    <b-col cols="6" class="text-right">
+                    <!-- <b-col cols="6" class="text-right">
                       <b-button variant="link" class="px-0">Forgot password?</b-button>
-                    </b-col>
+                    </b-col>-->
                   </b-row>
                 </b-form>
               </b-card-body>
@@ -237,8 +243,14 @@
 
 <script>
 import { required, minLength, between, sameAs } from "vuelidate/lib/validators";
+import { Action } from "@/store/const/user";
+import { UIAction } from "@/store/const/ui";
 import { isEmailAvailable } from "@/helpers/validators";
 import axios from "axios";
+import { createNamespacedHelpers } from "vuex";
+
+const userModule = createNamespacedHelpers("user/");
+const UIModule = createNamespacedHelpers("ui/");
 
 export default {
   name: "SignUp",
@@ -252,6 +264,13 @@ export default {
         phone: null
       }
     };
+  },
+  computed: {
+    // ...UIModule.mapState({
+    //   error_signup: state => state.error_signup,
+    //   isLoading: state => state.isLoading
+    // }).
+    ...UIModule.mapGetters(["getIsLoading"])
   },
   validations: {
     form: {
@@ -274,35 +293,64 @@ export default {
       }
     }
   },
+  watch: {
+    error_signup(oldValue, newValue) {
+      if (newValue) {
+        this.$bvToast.toast("Ocurrio un error al momento de registrarse", {
+          title: "Error inesperado",
+          autoHideDelay: 5000,
+          appendToast: false,
+          variant: "danger"
+        });
+      }
+    }
+  },
+  mounted() {
+    // this[UIAction.IS_LOADING]();
+    // console.log(UIModule);
+  },
   methods: {
-    handlerSubmit() {
+    ...UIModule.mapActions([UIAction.ERROR_SIGNUP, UIAction.IS_LOADING]),
+    ...userModule.mapActions([Action.USER_SIGNUP]),
+    async handlerSubmit() {
       this.$v.$touch();
       if (this.$v.$invalid) {
-        console.log("Invalido");
       } else {
-        // console.log(this.form);
-        axios
-          .post(
+        let opts = {
+          headers: {
+            "Content-Type": "application/json"
+          }
+        };
+
+        let body = {
+          nombres: this.form.nombre,
+          phone: this.form.phone,
+          password: this.form.password,
+          email: this.form.email,
+          username: this.form.nombre.trim()
+        };
+
+        this[UIAction.IS_LOADING]();
+
+        try {
+          let { data, status } = await axios.post(
             "http://localhost:8000/api/v1.0/users/",
-            {
-              nombres: this.form.nombre,
-              phone: this.form.phone,
-              password: this.form.password,
-              email: this.form.email,
-              username: this.form.nombre.trim()
-            },
-            {
-              headers: {
-                "Content-Type": "application/json",
-                "Bearer":
-                  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTcyMjQ2OTE5LCJqdGkiOiIwNmVkMGNkY2ExYWI0YTI5ODM4MzkxOGEyN2Y4NDRlNyIsInVzZXJfaWQiOjEsInVzZXJuYW1lIjoiZW5kZXJzb25wcm8ifQ.AT4PKOCPhjdKr1oU6FXVr611vUDmY4d4KXFbMcp16Uo",
-                "Authorization":
-                  "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTcyMjQ2OTE5LCJqdGkiOiIwNmVkMGNkY2ExYWI0YTI5ODM4MzkxOGEyN2Y4NDRlNyIsInVzZXJfaWQiOjEsInVzZXJuYW1lIjoiZW5kZXJzb25wcm8ifQ.AT4PKOCPhjdKr1oU6FXVr611vUDmY4d4KXFbMcp16Uo"
-              }
-            }
-          )
-          .then(data => console.log)
-          .catch(err => console.log);
+            body,
+            opts
+          );
+          // console.log(data);
+          switch (status) {
+            case 201:
+              console.log("Entre con estatus 201");
+              this[Action.USER_SIGNUP]({ data, body });
+              break;
+            default:
+              console.log("Ocurrio un error");
+              this[UIAction.ERROR_SIGNUP](true);
+          }
+        } catch (error) {
+          console.error(error);
+        }
       }
     }
   }
