@@ -1,0 +1,19 @@
+{
+  "message": "Mensaje en español",
+  "nav": {
+    "profile": "Perfil",
+    "exit": "Cerrar Sesión"
+  },
+  "signup": {
+    "title":"Registrarse",
+    "names": "Nombres",
+    "email": "Correo",
+    "cel": "Telefono",
+    "password": "Contraseña",
+    "repeat_password": "Repetir Contraseña",
+    "btn_singup": "Registrarme",
+    "errors": {
+      "field": "Este campo es requerido"
+    }
+  }
+}

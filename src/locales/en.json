@@ -1,0 +1,19 @@
+{
+  "message": "Mensaje en ingles",
+  "nav": {
+    "profile": "Profile",
+    "exit": "Exit"
+  },
+  "signup": {
+    "title":"Register",
+    "names": "Names",
+    "email": "Email",
+    "cel": "Phone",
+    "password": "Password",
+    "repeat_password": "Repeat password",
+    "btn_singup": "Register",
+    "errors": {
+      "field": "This field is required"
+    }
+  }
+}

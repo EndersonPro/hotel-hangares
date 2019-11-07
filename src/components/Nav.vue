@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-navbar toggleable="lg" type="dark">
+    <b-navbar toggleable="lg" type="dark" :variant="variant">
       <b-navbar-brand href="#">HH</b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
@@ -29,8 +29,8 @@
             <template v-slot:button-content>
               <em>User</em>
             </template>
-            <b-dropdown-item href="#">Perfil</b-dropdown-item>
-            <b-dropdown-item href="#">Cerrar Sesión</b-dropdown-item>
+            <b-dropdown-item href="#">{{ $t('nav.profile') }}</b-dropdown-item>
+            <b-dropdown-item href="#">{{ $t('nav.exit') }}</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>
@@ -41,6 +41,12 @@
 <script>
 export default {
   name: "NavBar",
+  props: {
+    variant: {
+      type: String,
+      default: null
+    }
+  },
   data() {
     return {
       languages: ["ES", "EN", "RU", "FA"],
@@ -50,6 +56,7 @@ export default {
   methods: {
     handlerLang(lang) {
       this.default_lang = lang;
+      this.$i18n.locale = lang.toLowerCase();
     }
   }
 };

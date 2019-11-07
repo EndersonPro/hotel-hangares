@@ -10,6 +10,7 @@ import Vuelidate from 'vuelidate';
 import App from './App';
 import router from './router';
 import store from './store/index';
+import i18n from './i18n'
 
 
 Vue.use(Vuelidate);
@@ -21,6 +22,8 @@ new Vue({
   router,
   store,
   template: '<App/>',
+  i18n,
+
   components: {
     App
   }
