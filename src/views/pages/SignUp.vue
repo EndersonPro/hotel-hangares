@@ -144,7 +144,7 @@
                         class="form-control"
                         :placeholder="$t('signup.names')"
                       />
-                      <b-form-invalid-feedback id="input-1-live-feedback">Este campo es requerido</b-form-invalid-feedback>
+                      <b-form-invalid-feedback id="input-1-live-feedback">{{ $t('signup.errors.field') }}</b-form-invalid-feedback>
                     </b-input-group>
                     <b-input-group class="mb-3">
                       <b-input-group-prepend>
@@ -159,7 +159,7 @@
                         class="form-control"
                         :placeholder="$t('signup.email')"
                       />
-                      <b-form-invalid-feedback id="input-1-live-feedback">Este campo es requerido</b-form-invalid-feedback>
+                      <b-form-invalid-feedback id="input-1-live-feedback">{{ $t('signup.errors.field') }}</b-form-invalid-feedback>
                     </b-input-group>
                     <!-- <div class="error" v-if="!$v.form.email.required">Campo requerido</div> -->
                     <b-input-group class="mb-3">
@@ -175,7 +175,7 @@
                         :state="$v.form.phone.$dirty ? !$v.form.phone.$error : null"
                         :placeholder="$t('signup.cel')"
                       />
-                      <b-form-invalid-feedback id="input-1-live-feedback">Este campo es requerido</b-form-invalid-feedback>
+                      <b-form-invalid-feedback id="input-1-live-feedback">{{ $t('signup.errors.field') }}</b-form-invalid-feedback>
                     </b-input-group>
                     <b-input-group class="mb-4">
                       <b-input-group-prepend>
@@ -236,8 +236,8 @@
         <b-row class="pt-2">
           <b-col class="d-flex justify-content-end" md="11">
             <span>
-              ¿Ya tienes una cuenta?
-              <router-link to="/">Inicia sesión</router-link>
+              {{$t('signup.signin.msg')}}
+              <router-link to="/">{{ $t('signup.signin.link') }}</router-link>
             </span>
           </b-col>
         </b-row>

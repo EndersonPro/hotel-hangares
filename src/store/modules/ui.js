@@ -4,11 +4,13 @@ export const ui = {
   namespaced: true,
   state: {
     isLoading: false,
-    error_signup: false
+    error_signup: false,
+    language: 'es'
   },
   getters: {
     isErrorSignUp: state => state.error_signup,
-    getIsLoading: state => state.isLoading
+    getIsLoading: state => state.isLoading,
+    getLanguage: state => state.language
   },
   mutations: {
     [UIMutation.setError](state, payload) {
@@ -16,6 +18,9 @@ export const ui = {
     },
     [UIMutation.setLoading](state) {
       state.isLoading = !state.isLoading;
+    },
+    [UIMutation.setLanguage](state, payload) {
+      state.language = payload;
     }
   },
   actions: {
@@ -24,6 +29,9 @@ export const ui = {
     },
     [UIAction.IS_LOADING]({ commit }) {
       commit(UIMutation.setLoading);
+    },
+    [UIAction.CHANGE_LANGUAGE]({ commit }, payload) {
+      commit(UIMutation.setLanguage, payload);
     }
   }
 };

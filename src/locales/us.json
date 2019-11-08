@@ -13,7 +13,13 @@
     "repeat_password": "Repeat password",
     "btn_singup": "Register",
     "errors": {
-      "field": "This field is required"
+      "field": "This field is required",
+      "min_length":"The password must be at least 6 characters.",
+      "password_equal":"Passwords do not match."
+    },
+    "signin":{
+      "msg":"Do you already have an account?",
+      "link":"Log in"
     }
   }
 }

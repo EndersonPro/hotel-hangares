@@ -15,13 +15,17 @@
           <b-nav-item href="#">Item 4</b-nav-item>
 
           <!-- <b-nav-item href="#" disabled>Disabled</b-nav-item> -->
-          <b-nav-item-dropdown :text="default_lang" right>
+          <flag :iso="getLanguage" />
+          <b-nav-item-dropdown :text="getLanguage.toUpperCase()" right>
             <b-dropdown-item
               v-for="language in languages"
               :key="language"
               href="#"
               @click="handlerLang(language)"
-            >{{ language }}</b-dropdown-item>
+            >
+              <flag :iso="language" />
+              {{ language }}
+            </b-dropdown-item>
           </b-nav-item-dropdown>
 
           <b-nav-item-dropdown right>
@@ -39,6 +43,11 @@
 </template>
 
 <script>
+import { UIAction } from "@/store/const/ui";
+import { createNamespacedHelpers } from "vuex";
+
+const UIModule = createNamespacedHelpers("ui/");
+
 export default {
   name: "NavBar",
   props: {
@@ -49,15 +58,20 @@ export default {
   },
   data() {
     return {
-      languages: ["ES", "EN", "RU", "FA"],
-      default_lang: "ES"
+      languages: ["ES", "US", "RU", "FR"]
+      // default_lang: "ES"
     };
+  },
+  computed: {
+    ...UIModule.mapGetters(["getLanguage"])
   },
   methods: {
     handlerLang(lang) {
       this.default_lang = lang;
       this.$i18n.locale = lang.toLowerCase();
-    }
+      this[UIAction.CHANGE_LANGUAGE](lang.toLowerCase());
+    },
+    ...UIModule.mapActions([UIAction.CHANGE_LANGUAGE])
   }
 };
 </script>

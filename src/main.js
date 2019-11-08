@@ -10,9 +10,10 @@ import Vuelidate from 'vuelidate';
 import App from './App';
 import router from './router';
 import store from './store/index';
-import i18n from './i18n'
+import i18n from './i18n';
+import FlagIcon from 'vue-flag-icon';
 
-
+Vue.use(FlagIcon);
 Vue.use(Vuelidate);
 Vue.use(BootstrapVue);
 
@@ -23,8 +24,11 @@ new Vue({
   store,
   template: '<App/>',
   i18n,
-
   components: {
     App
+  },
+  beforeCreate() {
+    console.log(this.$store.state.ui.language);
+    this.$i18n.locale = this.$store.state.ui.language;
   }
 });

@@ -13,7 +13,13 @@
     "repeat_password": "Repetir Contraseña",
     "btn_singup": "Registrarme",
     "errors": {
-      "field": "Este campo es requerido"
+      "field": "Este campo es requerido",
+      "min_length":"La contraseña debe tener al menos 6 caracteres.",
+      "password_equal":"Las contraseñas no coinciden."
+    },
+    "signin":{
+      "msg":"¿Ya tienes una cuenta?",
+      "link":"Iniciar Sesíon"
     }
   }
 }
