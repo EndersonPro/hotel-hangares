@@ -21,5 +21,15 @@
       "msg":"¿Ya tienes una cuenta?",
       "link":"Iniciar Sesíon"
     }
+  },
+  "login":{
+    "title":"Iniciar Sesión",
+    "username":"Usuario",
+    "password":"Contraseña",
+    "btn_singin": "Acceder",
+    "signup":{
+      "msg":"¿No tienes una cuenta?",
+      "link":"Registrate"
+    }
   }
 }

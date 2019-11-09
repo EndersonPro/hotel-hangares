@@ -34,14 +34,25 @@
         <b-badge variant="primary">{{ itemsCount }}</b-badge>
       </b-dropdown-item>
       <b-dropdown-divider />
-      <b-dropdown-item><i class="fa fa-shield" /> Lock Account</b-dropdown-item>
-      <b-dropdown-item><i class="fa fa-lock" /> Logout</b-dropdown-item>
+      <b-dropdown-item ><i class="fa fa-shield" /> Lock Account</b-dropdown-item>
+      <b-dropdown-item @click="logout"><i class="fa fa-lock" /> Logout</b-dropdown-item>
     </template>
   </AppHeaderDropdown>
 </template>
 
 <script>
 import { HeaderDropdown as AppHeaderDropdown } from '@coreui/vue'
+import { required, minLength, between, sameAs } from "vuelidate/lib/validators";
+import { Action } from "@/store/const/user";
+import { UIAction } from "@/store/const/ui";
+import { isEmailAvailable } from "@/helpers/validators";
+import axios from "axios";
+import { createNamespacedHelpers } from "vuex";
+import NavBar from "@/components/Nav";
+
+const userModule = createNamespacedHelpers("user/");
+const UIModule = createNamespacedHelpers("ui/");
+
 export default {
   name: 'DefaultHeaderDropdownAccnt',
   components: {
@@ -49,6 +60,18 @@ export default {
   },
   data: () => {
     return { itemsCount: 42 }
+  },
+  methods:{
+    ...userModule.mapActions([Action.USER_LOGOUT, Action.USER_LOGIN]),
+    async logout(){
+      await this.USER_LOGOUT();
+      this.$router.push("/login");
+    }
+  },
+  beforeMount(){
+    if (this.$store.state.user.token == ''){
+      this.$router.push("/login");
+    }
   }
 }
 </script>

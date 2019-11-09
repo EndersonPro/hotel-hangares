@@ -324,6 +324,11 @@ function configRoutes() {
       component: SignUp
     },
     {
+      path: '/login',
+      name: 'LogIn',
+      component: Login 
+    },
+    {
       path: '/pages',
       redirect: '/pages/404',
       name: 'Pages',
@@ -343,11 +348,11 @@ function configRoutes() {
           name: 'Page500',
           component: Page500
         },
-        {
-          path: 'login',
-          name: 'Login',
-          component: Login
-        },
+        // {
+        //   path: 'login',
+        //   name: 'Login',
+        //   component: Login
+        // },
         {
           path: 'register',
           name: 'Register',

@@ -16,16 +16,21 @@ export const user = {
     [Mutations.SET_TOKEN](state, { access, refresh }) {
       state.token = access;
       state.refresh = refresh;
+    },
+    [Mutations.DELETE_USER](state){
+      state.token = '';
+      state.refresh = '';
+      state.user = {};
     }
   },
   actions: {
-    [Action.USER_LOGIN]({ commit }, { userinfo, body }) {
+    async [Action.USER_LOGIN]({ commit }, {userinfo, body}) {
       let opts = {
         headers: {
           'Content-Type': 'application/json'
         }
       };
-      axios
+      await axios
         .post(
           'http://localhost:8000/api/v1.0/token/',
           { username: body.username, password: body.password },
@@ -45,9 +50,12 @@ export const user = {
         })
         .catch(err => console.error);
     },
+    [Action.USER_LOGOUT]({commit}){
+      commit(Mutations.DELETE_USER);
+    },
     [Action.USER_SIGNUP]({ commit, dispatch }, { data, body }) {
       let userinfo = data;
       dispatch(Action.USER_LOGIN, { userinfo, body });
-    }
+    },
   }
 };
