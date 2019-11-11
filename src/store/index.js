@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import mutations from './mutations';
 import { ui } from './modules/ui';
 import { user } from './modules/user';
+import { room } from './modules/room';
 import createPersistedState from 'vuex-persistedstate';
 import Cookies from 'js-cookie';
 
@@ -34,7 +35,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   modules: {
     ui,
-    user
+    user,
+    room
   },
   plugins: [
     createPersistedState({

@@ -25,6 +25,7 @@ export default {
 
 <style lang="scss">
 @import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
+
 // CoreUI Icons Set
 @import "~@coreui/icons/css/coreui-icons.min.css";
 /* Import Font Awesome Icons Set */

@@ -12,10 +12,15 @@ import router from './router';
 import store from './store/index';
 import i18n from './i18n';
 import FlagIcon from 'vue-flag-icon';
+import VueSwal from 'vue-swal'
 
+
+Vue.use(VueSwal);
 Vue.use(FlagIcon);
 Vue.use(Vuelidate);
 Vue.use(BootstrapVue);
+
+
 
 /* eslint-disable no-new */
 new Vue({
