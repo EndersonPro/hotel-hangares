@@ -28,6 +28,18 @@
             </b-dropdown-item>
           </b-nav-item-dropdown>
 
+          <b-nav-item-dropdown>
+            <!-- Using 'button-content' slot -->
+            <template v-slot:button-content>
+              <em>
+                <i class="fa fa-book"></i>
+                <b-badge pill variant="danger">{{roomsAdded}}</b-badge>
+              </em>
+            </template>
+            <b-dropdown-item href="#">Confirmar Reserva</b-dropdown-item>
+            <b-dropdown-item href="#">Vaciar Book Room</b-dropdown-item>
+          </b-nav-item-dropdown>
+
           <b-nav-item-dropdown right>
             <!-- Using 'button-content' slot -->
             <template v-slot:button-content>
@@ -44,9 +56,11 @@
 
 <script>
 import { UIAction } from "@/store/const/ui";
+import { Action } from "@/store/const/room";
 import { createNamespacedHelpers } from "vuex";
 
 const UIModule = createNamespacedHelpers("ui/");
+const roomModule = createNamespacedHelpers("room/");
 
 export default {
   name: "NavBar",
@@ -58,12 +72,14 @@ export default {
   },
   data() {
     return {
-      languages: ["ES", "US", "RU", "FR"]
+      languages: ["ES", "US", "RU", "FR"],
+      roomsAdded: this.$store.state.room.bookRoom.length
       // default_lang: "ES"
     };
   },
   computed: {
-    ...UIModule.mapGetters(["getLanguage"])
+    ...UIModule.mapGetters(["getLanguage"]),
+    ...roomModule.mapState(["bookRoom"])
   },
   methods: {
     handlerLang(lang) {
@@ -72,6 +88,11 @@ export default {
       this[UIAction.CHANGE_LANGUAGE](lang.toLowerCase());
     },
     ...UIModule.mapActions([UIAction.CHANGE_LANGUAGE])
+  },
+ watch:{
+    bookRoom(newBookRoom, oldBookRoom){
+      this.roomsAdded = newBookRoom.length;
+    }
   }
 };
 </script>

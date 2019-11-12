@@ -16,7 +16,7 @@
                 <span class="price-room"><i class="fa fa-dollar" ></i>{{price}}</span>
                 <span class="per">/ por noche</span>
             </p>
-            <p><b-button variant="outline-primary" class="btn-book">Reservar ahora</b-button></p>
+            <p><b-button variant="outline-primary" @click="addRoom" class="btn-book"><i class="fa fa-plus" ></i> Book Room</b-button></p>
         </div>
     </b-col>
 </div>
@@ -25,6 +25,10 @@
 
 import Vue from 'vue';
 import VueStarRating from 'vue-star-rating'
+import { Action } from "@/store/const/room";
+import { createNamespacedHelpers } from "vuex";
+
+const roomModule = createNamespacedHelpers("room/");
 
 let wrapper = document.createElement('div');
 
@@ -58,7 +62,9 @@ let component = new RatingComponent().$mount(wrapper);
 export default {    
     name:"RoomCard",
     props: {
-        
+            id:{
+                type:Number
+            },
             image:{
                 type: String,
                 default: "https://www.the-connaught.co.uk/SysSiteAssets/rooms--suites/superior-queen-single-room/superior-queen-room---teaser.jpg?w=500&h=462&scale=both&mode=crop"
@@ -85,6 +91,7 @@ export default {
         return {rate:5}
     },
     methods:{
+        ...roomModule.mapActions([Action.ADD_BOOKROOM]),
         getRate() {
             this.$swal({
                 content: component.$el,
@@ -97,6 +104,21 @@ export default {
                 this.rate = state.note;
                 this.$swal('Respuesta enviada','Gracias por ayudarnos a mejorar',"success");
             })
+        },
+        addRoom(){
+
+            let room = {
+                id: this.id,
+                numero: this.number,
+                precio: this.price,
+                tipoHabitacion: this.type,
+                reservada: this.reserved
+            }
+            if (!this.reserved){
+                this.ADD_BOOKROOM({room});
+            }else{
+                this.$swal('Habitacion Reservada','No puede agregar al Book Room esta habitacion',"error");
+            }
         }
     },
     mounted(){

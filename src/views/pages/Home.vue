@@ -47,7 +47,7 @@
 					</div>
 			</b-row>
       <b-row>
-        <RoomCard v-for="r in items" :type="r.tipoHabitacion.nombre" :number="r.numero" :price="Number(r.precio)" :reserved="r.reservada"></RoomCard>
+        <RoomCard v-for="r in items" :id="r.id" :type="r.tipoHabitacion.nombre" :number="r.numero" :price="Number(r.precio)" :reserved="r.reservada"></RoomCard>
       </b-row>
     </b-container>
   </div>

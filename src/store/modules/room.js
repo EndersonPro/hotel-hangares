@@ -4,12 +4,19 @@ import axios from 'axios';
 export const room = {
   namespaced: true,
   state: {
-    rooms: []
+    rooms: [],
+    bookRoom: []
   },
   mutations: {
     [Mutations.SET_ROOMS](state, rooms) {
       state.rooms = rooms;
     //   console.log(state.rooms);
+    },
+    [Mutations.SET_BOOKROOM](state, room){
+      state.bookRoom.push(room);
+    },
+    [Mutations.DELETE_BOOKROOM](state){
+      state.bookRoom=[];
     }
   },
   actions: {
@@ -45,6 +52,12 @@ export const room = {
                 console.log('Ocurrio un error al cargar las habitaciones');
             }
           }).catch(err => console.error);
+      },
+      [Action.ADD_BOOKROOM]({ commit }, {room}){
+        commit(Mutations.SET_BOOKROOM,room);
+      },
+      [Action.CLEAR_BOOKROOM]({ commit }){
+        commit(Mutations.DELETE_BOOKROOM);
       }
   }
 };

@@ -40,7 +40,7 @@ export default new Vuex.Store({
   },
   plugins: [
     createPersistedState({
-      paths: ['user','ui'],
+      paths: ['user','ui','room'],
       storage: {
         getItem: key => Cookies.get(key),
         setItem: (key, value) => Cookies.set(key, value),
