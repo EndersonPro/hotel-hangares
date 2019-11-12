@@ -2,7 +2,10 @@
   "message": "Mensaje en ingles",
   "nav": {
     "profile": "Profile",
-    "exit": "Exit"
+    "exit": "Exit",
+    "user":{
+      "login": "Log In"
+    }
   },
   "signup": {
     "title":"Register",
@@ -20,6 +23,16 @@
     "signin":{
       "msg":"Do you already have an account?",
       "link":"Log in"
+    }
+  },
+  "login":{
+    "title":"Log In",
+    "username":"Username",
+    "password":"Password",
+    "btn_singin": "Log In",
+    "signup":{
+      "msg":"You do not have an account?",
+      "link":"Register now"
     }
   }
 }

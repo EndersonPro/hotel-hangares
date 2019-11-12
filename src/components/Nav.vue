@@ -15,18 +15,6 @@
           <b-nav-item href="#">Item 4</b-nav-item>
 
           <!-- <b-nav-item href="#" disabled>Disabled</b-nav-item> -->
-          <flag :iso="getLanguage" />
-          <b-nav-item-dropdown :text="getLanguage.toUpperCase()" right>
-            <b-dropdown-item
-              v-for="language in languages"
-              :key="language"
-              href="#"
-              @click="handlerLang(language)"
-            >
-              <flag :iso="language" />
-              {{ language }}
-            </b-dropdown-item>
-          </b-nav-item-dropdown>
 
           <b-nav-item-dropdown>
             <!-- Using 'button-content' slot -->
@@ -40,13 +28,31 @@
             <b-dropdown-item href="#">Vaciar Book Room</b-dropdown-item>
           </b-nav-item-dropdown>
 
-          <b-nav-item-dropdown right>
+          <b-nav-item-dropdown right v-if="getUser.user != null">
             <!-- Using 'button-content' slot -->
             <template v-slot:button-content>
               <em>User</em>
             </template>
             <b-dropdown-item href="#">{{ $t('nav.profile') }}</b-dropdown-item>
             <b-dropdown-item href="#">{{ $t('nav.exit') }}</b-dropdown-item>
+          </b-nav-item-dropdown>
+
+          <b-nav-item href="#" v-else >
+            <i class="fa fa-user-o fa-lg pr-1 text-white " v-if="!isViewLogin"></i>
+            <router-link to="/login"  class="text-white" v-if="!isViewLogin">{{ $t('nav.user.login') }}</router-link>
+          </b-nav-item>
+
+          <flag :iso="getLanguage" />
+          <b-nav-item-dropdown :text="getLanguage.toUpperCase()" right>
+            <b-dropdown-item
+              v-for="language in languages"
+              :key="language"
+              href="#"
+              @click="handlerLang(language)"
+            >
+              <flag :iso="language" />
+              {{ language }}
+            </b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>
@@ -61,6 +67,7 @@ import { createNamespacedHelpers } from "vuex";
 
 const UIModule = createNamespacedHelpers("ui/");
 const roomModule = createNamespacedHelpers("room/");
+const userModule = createNamespacedHelpers("user/");
 
 export default {
   name: "NavBar",
@@ -79,7 +86,11 @@ export default {
   },
   computed: {
     ...UIModule.mapGetters(["getLanguage"]),
-    ...roomModule.mapState(["bookRoom"])
+    ...roomModule.mapState(["bookRoom"]),
+    ...userModule.mapGetters(["getUser"]),
+    isViewLogin: function() {
+      return this.$router.history.current.fullPath == "/login";
+    }
   },
   methods: {
     handlerLang(lang) {
@@ -89,8 +100,8 @@ export default {
     },
     ...UIModule.mapActions([UIAction.CHANGE_LANGUAGE])
   },
- watch:{
-    bookRoom(newBookRoom, oldBookRoom){
+  watch: {
+    bookRoom(newBookRoom, oldBookRoom) {
       this.roomsAdded = newBookRoom.length;
     }
   }

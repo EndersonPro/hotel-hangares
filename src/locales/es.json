@@ -2,7 +2,10 @@
   "message": "Mensaje en español",
   "nav": {
     "profile": "Perfil",
-    "exit": "Cerrar Sesión"
+    "exit": "Cerrar Sesión",
+    "user":{
+      "login": "Iniciar Sesíon"
+    }
   },
   "signup": {
     "title":"Registrarse",

@@ -1,25 +1,12 @@
 <template>
-  <transition :name="transitionName">
     <router-view></router-view>
-  </transition>
+  <!-- <transition name="slide-fade">
+  </transition> -->
 </template>
 
 <script>
 export default {
   name: "app",
-  data() {
-    return {
-      transitionName: ""
-    };
-  },
-  watch: {
-    '$route' (to, from) {
-      // console.log("ABER");
-      const toDepth = to.path.split("/").length;
-      const fromDepth = from.path.split("/").length;
-      this.transitionName = toDepth < fromDepth ? "slide-right" : "slide-left";
-    }
-  }
 };
 </script>
 
@@ -42,5 +29,17 @@ $simple-line-font-path: "~simple-line-icons/fonts/";
 @import "assets/scss/style";
 * {
   font-family: "Roboto", sans-serif;
+}
+
+.slide-fade-enter-active {
+  transition: all 0.3s ease;
+}
+.slide-fade-leave-active {
+  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+}
+.slide-fade-enter,
+.slide-fade-leave-to {
+  transform: translateX(10px);
+  opacity: 0;
 }
 </style>

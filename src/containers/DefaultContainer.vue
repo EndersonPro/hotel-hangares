@@ -2,15 +2,15 @@
   <div class="app">
     <DefaultHeader/>
     <div class="app-body">
-      <AppSidebar fixed>
-        <SidebarHeader/>
-        <SidebarForm/>
-        <SidebarNav :navItems="nav"></SidebarNav>
-        <SidebarFooter/>
-        <SidebarMinimizer/>
+      <AppSidebar  fixed>
+        <!-- <SidebarHeader/> -->
+        <!-- <SidebarForm/> -->
+        <SidebarNav :navItems="nav"></SidebarNav> 
+        <!-- <SidebarFooter/> -->
+        <!-- <SidebarMinimizer/> -->
       </AppSidebar>
       <main class="main">
-        <Breadcrumb :list="list"/>
+        <!-- <Breadcrumb :list="list"/> -->
         <div class="container-fluid">
           <router-view></router-view>
         </div>

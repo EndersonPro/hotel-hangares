@@ -1,6 +1,5 @@
 <template>
   <div>
-    <NavBar variant="info"></NavBar>
     <div class="app flex-row align-items-center">
       <div class="container">
         <b-row class="justify-content-center">
