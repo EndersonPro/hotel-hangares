@@ -23,19 +23,19 @@
 		                </b-col>
 		                <b-col colmd="2">
 		                  <b-form-group>
-		                    <label for="adults">Adultos</label>
+		                    <label for="adults">Reservada</label>
 		                    <div class="form-field">
 		                      <i class="icon icon-arrow-down3"></i>
-		                      <b-form-select id="people" v-model="adults" :options="options" class="form-control"></b-form-select>
+		                      <b-form-select id="people" v-model="reserved" :options="optionsReserved" class="form-control"></b-form-select>
 		                    </div>
 		                  </b-form-group>
 		                </b-col>
 		                <b-col colmd="2">
 		                  <div class="form-group">
-		                    <label for="children">Niños</label>
+		                    <label for="children">Tipo Habitación</label>
 		                    <div class="form-field">
 		                      <i class="icon icon-arrow-down3"></i>
-		                      <b-form-select id="people" v-model="children" :options="options" class="form-control"></b-form-select>
+		                      <b-form-select id="people" v-model="typeRoom" :options="optionsType" class="form-control"></b-form-select>
 		                    </div>
 		                  </div>
 		                </b-col>
@@ -60,24 +60,43 @@ export default {
         return{
           checkIn:"",
           checkOut:"",
-          adults: "",
-          children: "",
-          options:[
-          { value: null, text: 'Please select an option' },
-          { value: '1', text: '1' },
-          { value: '2', text: '2' },
-          { value: '3', text: '3' },
-          { value: '4', text: '4+'}
+          reserved: null,
+          typeRoom: null,
+          optionsReserved:[
+            { value: null, text: 'Selecciona una opción' },
+            { value: 0, text: 'No' },
+            { value: 1, text: 'Si' }
+          ],
+          optionsType:[
+            { value: null, text: 'Selecciona una opción' },
+            { value: 1, text: 'Suite' },
+            { value: 2, text: 'Familiar' },
+            { value: 3, text: 'Individual' }
           ]
         }
     },
     methods:{
-      ...roomModule.mapActions([Action.FILTER_RESERVED]),
+      ...roomModule.mapActions([Action.FILTER_RESERVED,Action.FILTER_DATE]),
       handlerSubmit() {
-        
-          var reserved = false;
+
+          let roomParams = {
+            reservada: this.reserved,
+            tipoHabitacion: this.typeRoom
+          }
+          let reserveParams ={
+            fechaInicio: this.checkIn,
+            fechaFin: this.checkOut
+          }
+          console.log(this.checkIn);
+
+          var reserved = 0;
           try {
-            this.FILTER_RESERVED({reserved});
+            if (this.checkIn!="" && this.checkOut !=""){
+              this.FILTER_DATE({reserveParams});
+            }else{
+              this.FILTER_RESERVED({roomParams});
+            }
+            
           } catch (error) {
             console.log(error);
           }
@@ -86,9 +105,12 @@ export default {
 
     },
     mounted(){
-        var reserved = false;
+        let roomParams = {
+            reservada: null,
+            tipoHabitacion: null
+        }
         try {
-          this.FILTER_RESERVED({reserved});
+          this.FILTER_RESERVED({roomParams});
         } catch (error) {
           console.log(error);
         }

@@ -4,7 +4,7 @@
 				<div class="row">
 					<div class="col-md-12 text-center colorlib-heading">
 						<span><i class="fa fa-star fa-lg mt-4" v-for="s in Number(5)"></i></span>
-						<h2>Our Satisfied Guests says</h2>
+						<h2>Nuestros Clientes</h2>
 						<p>We love to tell our successful far far away, behind the word mountains,</br> far from the countries Vokalia and Consonantia, there live the blind texts.</p>
 					</div>
 				</div>

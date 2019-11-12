@@ -1,7 +1,10 @@
 <template>
-<div>
+<div class="animated fadeIn">
     <b-col colmd="4" class="room-wrap">
-        <a href="#" class="room image-popup-link" v-bind:style="{ backgroundImage: 'url('+image+')' }"></a>
+        <a href="#" class="room image-popup-link" v-bind:style="{ backgroundImage: 'url('+image+')' }">
+            <div class=" state reserved" v-if="reserved"><span>reservada</span></div>
+            <div class="state aviable" v-else><span>disponible</span></div>
+        </a>
         <div class="desc text-center">
             <h2><a href="#">{{type}} {{number}}</a></h2>
             <span class="rate-star">
@@ -11,7 +14,7 @@
             <p class="price">
                 <span class="currency"></span>
                 <span class="price-room"><i class="fa fa-dollar" ></i>{{price}}</span>
-                <span class="per">/ per night</span>
+                <span class="per">/ por noche</span>
             </p>
             <p><b-button variant="outline-primary" class="btn-book">Reservar ahora</b-button></p>
         </div>
@@ -71,6 +74,10 @@ export default {
             number:{
                 type:Number,
                 default: 201
+            },
+            reserved:{
+                type: Boolean,
+                default: false
             }
                         
     },
@@ -101,6 +108,27 @@ export default {
 
 h2 a{
     color:#000;
+    text-decoration: none !important;
+}
+.state{
+    font-size: 12px;
+    margin-top: 250px;
+    margin-left: 230px;
+    border-radius: 20px;
+    width: 100px;
+    font-weight: bold;
+    padding:5px 12px;
+    text-transform: uppercase;
+    text-align: center;
+}
+.reserved{
+    background: #fa2626;
+    color: #ffffff;
+}
+.aviable{
+    background: #27a027;
+    color: #ffffff;
+    
 }
 .room-wrap {
   margin-bottom: 2em; 
@@ -108,6 +136,7 @@ h2 a{
   }
     
  .room {
+  text-decoration: none !important;
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;

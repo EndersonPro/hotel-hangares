@@ -13,40 +13,29 @@ export const room = {
     }
   },
   actions: {
-    async [Action.FILTER_DATE]({ commit }, {checkIn, checkOut}) {
-      let opts = {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      };
-      await axios.get(
-          'http://localhost:8000/api/v1.0/rooms/',
-          { fechaInicio: checkIn, fechaFin: checkOut },
-          opts
-        )
-        .then(response => {
+    async [Action.FILTER_DATE]({ commit }, {reserveParams}) {
+      await axios.get('http://localhost:8000/api/v1.0/reserves/',{params:reserveParams}).then(response => {
           let { status, data } = response;
-          commit(Mutations.SET_ROOMS, data);
-        //   switch (status) {
-        //     case 200:
-        //       commit(Mutations.SET_TOKEN, data);
-        //       commit(Mutations.SET_USER, userinfo);
-        //       break;
-        //     default:
-        //       console.log('Ocurrio un error, en inicio de sesión');
-        //       this[UIAction.ERROR_SIGNUP](true);
-        //   }
-        })
-        .catch(err => console.error);
+          switch (status) {
+            case 200:
+              var rooms=[]
+              data.forEach(element => {
+                rooms.push(...element.habitaciones);
+              });
+              commit(Mutations.SET_ROOMS, rooms);
+              break;
+            default:
+              console.log('Ocurrio un error al cargar las habitaciones');
+          }
+        }).catch(err => console.error);
     },
-    async [Action.FILTER_RESERVED]({ commit }, {reserved}) {
+    async [Action.FILTER_RESERVED]({ commit }, {roomParams}) {
         let opts = {
           headers: {
             'Content-Type': 'application/json'
           }
         };
-        await axios.get('http://localhost:8000/api/v1.0/rooms/').then(response => {
-
+        await axios.get('http://localhost:8000/api/v1.0/rooms/',{params: roomParams}).then(response => {
             let { status, data } = response;
             switch (status) {
               case 200:
@@ -55,8 +44,7 @@ export const room = {
               default:
                 console.log('Ocurrio un error al cargar las habitaciones');
             }
-          })
-          .catch(err => console.error);
+          }).catch(err => console.error);
       }
   }
 };

@@ -237,7 +237,7 @@
           <b-col class="d-flex justify-content-end" md="11">
             <span>
               {{$t('signup.signin.msg')}}
-              <router-link to="/">{{ $t('signup.signin.link') }}</router-link>
+              <router-link to="/login">{{ $t('signup.signin.link') }}</router-link>
             </span>
           </b-col>
         </b-row>

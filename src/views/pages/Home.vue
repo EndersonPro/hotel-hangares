@@ -42,18 +42,19 @@
   			<b-row>
 					<div class="col-md-12 text-center colorlib-heading">
 						<span><i class="fa fa-star fa-lg mt-4" v-for="s in Number(5)"></i></span>
-						<h2>Rooms</h2>
+						<h2>Habitaciones</h2>
 						<p>We love to tell our successful far far away, behind the word mountains,</br> far from the countries Vokalia and Consonantia, there live the blind texts.</p> </br>
 					</div>
 			</b-row>
       <b-row>
-        <RoomCard v-for="r in items" :type="r.tipoHabitacion.nombre" :number="r.numero" :price="Number(r.precio)"></RoomCard>
+        <RoomCard v-for="r in items" :type="r.tipoHabitacion.nombre" :number="r.numero" :price="Number(r.precio)" :reserved="r.reservada"></RoomCard>
       </b-row>
     </b-container>
   </div>
 
   <Testimonials></Testimonials>
 
+  <Reserves></Reserves>
 </div>
 </template>
 
@@ -64,6 +65,7 @@ import SearchBar from "@/components/SearchBar";
 import Services from "@/components/Services";
 import RoomCard from "@/components/RoomCard";
 import Testimonials from "@/components/Testimonials";
+import Reserves from "@/components/Reserves";
 
 import { Action } from "@/store/const/room";
 import { createNamespacedHelpers } from "vuex";
@@ -91,7 +93,8 @@ export default {
     Services,
     SearchBar,
     RoomCard,
-    Testimonials
+    Testimonials,
+    Reserves
   }
 };
 </script>
@@ -142,6 +145,7 @@ export default {
   background: #fafafa; }
 
 #colorlib-services,
+#colorlib-reserves,
 #colorlib-rooms {
 
   padding: 6em 0;
