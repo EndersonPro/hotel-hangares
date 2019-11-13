@@ -245,7 +245,8 @@ export default {
     NavBar
   },
   computed: {
-    ...UIModule.mapGetters(["getIsLoading"])
+    ...UIModule.mapGetters(["getIsLoading"]),
+    ...userModule.mapGetters(["getToken"])
   },
   validations: {
     form: {
@@ -272,14 +273,14 @@ export default {
   },
   mounted() {
     // this[UIAction.IS_LOADING]();
-    if (this.$store.state.user.token != "") {
+    if (this.$store.state.user.token != null) {
       this.$router.push("/recepcion");
     }
   },
   methods: {
     ...UIModule.mapActions([UIAction.ERROR_SIGNUP, UIAction.IS_LOADING]),
     ...userModule.mapActions([Action.USER_LOGIN]),
-    async handlerSubmit() {
+    handlerSubmit() {
       this.$v.$touch();
       if (this.$v.$invalid) {
       } else {
@@ -295,11 +296,10 @@ export default {
         };
 
         this[UIAction.IS_LOADING]();
-
         try {
-          if (this.$store.state.user.token == "") {
-            await this.USER_LOGIN({ body });
-            this.$router.push("/recepcion");
+          if (this.getToken == null) {
+            this.USER_LOGIN({ body });
+            // this.$router.push("/recepcion");
           }
         } catch (error) {
           console.error(error);
