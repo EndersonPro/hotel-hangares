@@ -1,13 +1,13 @@
 <template>
   <div id="colorlib-reserves" class="colorlib-light-grey animated fadeIn">
     <b-container>
-    <b-row>
+    <!-- <b-row>
         <div class="col-md-12 text-center colorlib-heading">
             <span><i class="fa fa-star fa-lg mt-4" v-for="s in Number(5)"></i></span>
             <h2>Reservas</h2>
             <p>We love to tell our successful far far away, behind the word mountains,</br> far from the countries Vokalia and Consonantia, there live the blind texts.</p> </br>
         </div>
-    </b-row>
+    </b-row> -->
     <b-row>
       <b-col lg="12">
         <c-table :table-data="items" :fields="fields" caption="<i class='fa fa-align-justify'></i>"></c-table>
@@ -15,7 +15,6 @@
     </b-row>
     </b-container>
   </div>
-
 </template>
 
 <script>
@@ -35,13 +34,21 @@ function getInfo(){
                 element.habitaciones.forEach(e => {
                     roomsReserved+=e.numero+" ";
                 });
+                var status;
+                if (element.activo){
+                  status="Active";
+                }else{
+                  status="Inactive";
+                }
                 reserves.push({
                     asigned: element.responsable.username, 
                     client: element.usuario.username, 
                     checkIn: element.fechaInicio, 
                     checkOut: element.fechaFin, 
                     rooms: roomsReserved, 
-                    status: 'Active'
+                    status: status,
+                    actions:element.id,
+                    roomsObject: element.habitaciones
                     });
             });
             break;
@@ -66,7 +73,8 @@ export default {
         {key: 'checkIn'},
         {key: 'checkOut'},
         {key: 'rooms', label: 'Habitaciones'},
-        {key: 'status',label: 'Estado', sortable: true}
+        {key: 'status',label: 'Estado', sortable: true},
+        {key: 'actions',label: 'Acciones'}
       ],
     }
   },

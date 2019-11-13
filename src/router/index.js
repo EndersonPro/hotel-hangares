@@ -56,6 +56,7 @@ const Page500 = () => import('@/views/pages/Page500');
 const Login = () => import('@/views/pages/Login');
 const Register = () => import('@/views/pages/Register');
 const NuevaReserva = () => import('@/views/pages/NuevaReserva');
+const ListReserves = () => import('@/views/pages/ListReserves');
 
 // Users
 const Users = () => import('@/views/users/Users');
@@ -81,6 +82,11 @@ function configRoutes() {
           path: '/recepcion/nueva-reserva',
           name: 'NuevaReserva',
           component: NuevaReserva,
+        },
+        {
+          path: '/recepcion/lista-reservas',
+          name: 'ListReserves',
+          component: ListReserves,
         },
         {
           path: 'theme',

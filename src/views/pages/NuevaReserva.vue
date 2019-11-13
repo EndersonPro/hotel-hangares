@@ -122,7 +122,6 @@ export default {
   name: "NuevaReserva",
   data(){
       return {
-        box:[],
         roomSelected: [],
         userSelected: [],
         respSelected: [],
@@ -195,7 +194,7 @@ export default {
           switch (status) {
             case 200:
               this.dataUsers = data;
-              var currentUser = this.$store.state.user.user
+              var currentUser = this.$store.state.user.user.username
               this.respSelected =  this.dataUsers.filter(function(user) {
                 return user.username == currentUser;
               })[0];

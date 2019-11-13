@@ -18,6 +18,11 @@ export default {
           name: "Generar Reserva",
           url: "/recepcion/nueva-reserva",
           icon: "icon-puzzle"
+        },
+        {
+          name: "Ver Reservas",
+          url: "/recepcion/lista-reservas",
+          icon: "icon-puzzle"
         }
       ]
     }
