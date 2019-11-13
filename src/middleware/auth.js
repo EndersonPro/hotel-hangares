@@ -5,4 +5,14 @@ export const onlyAdmin = (to, from, next) => {
   next();
 };
 
-export const onlyReceptionist = (to, from, next) => {};
+export const onlyReceptionist = async (to, from, next) => {
+  const userType = await store.getters['user/getUser'].type_user;
+  if (userType === 2) {
+    next();
+  } else {
+    next({
+      name: 'Home',
+      query: { redirectFrom: to.fullPath },
+    });
+  }
+};

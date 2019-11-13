@@ -1,11 +1,11 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import { requireAuth } from '@/middleware/auth';
+import { onlyAdmin, onlyReceptionist } from '@/middleware/auth';
 // Containers
 const DefaultContainer = () => import('@/containers/DefaultContainer');
 
 // Views
-const Dashboard = () => import('@/views/Dashboard');
+// const Dashboard = () => import('@/views/Dashboard');
 
 const Colors = () => import('@/views/theme/Colors');
 const Typography = () => import('@/views/theme/Typography');
@@ -70,11 +70,11 @@ function configRoutes() {
       // redirect: '/dashboard',
       name: 'Home',
       component: Home,
-      beforeEnter: requireAuth,
       // component: DefaultContainer,
     },
     {
       path: '/recepcion',
+      beforeEnter: onlyReceptionist,
       component: DefaultContainer,
       children: [
         {

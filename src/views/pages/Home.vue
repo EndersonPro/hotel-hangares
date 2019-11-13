@@ -33,7 +33,7 @@
     </b-container>
 	</div>
 
-  <SearchBar></SearchBar>
+  <!-- <SearchBar></SearchBar>
 
   <Services></Services>
 
@@ -41,20 +41,20 @@
     <b-container>
   			<b-row>
 					<div class="col-md-12 text-center colorlib-heading">
-						<span><i class="fa fa-star fa-lg mt-4" v-for="s in Number(5)"></i></span>
+						<span><i class="fa fa-star fa-lg mt-4" v-for="s in Number(5)" :key="s"></i></span>
 						<h2>Habitaciones</h2>
-						<p>We love to tell our successful far far away, behind the word mountains,</br> far from the countries Vokalia and Consonantia, there live the blind texts.</p> </br>
+						<p>We love to tell our successful far far away, behind the word mountains,<br> far from the countries Vokalia and Consonantia, there live the blind texts.</p> <br>
 					</div>
 			</b-row>
       <b-row>
-        <RoomCard v-for="r in items" :id="r.id" :type="r.tipoHabitacion.nombre" :number="r.numero" :price="Number(r.precio)" :reserved="r.reservada"></RoomCard>
+        <RoomCard v-for="r in items" :id="r.id" :type="r.tipoHabitacion.nombre" :number="r.numero" :price="Number(r.precio)" :reserved="r.reservada" :key="r.id"></RoomCard>
       </b-row>
     </b-container>
   </div>
 
   <Testimonials></Testimonials>
 
-  <Reserves></Reserves>
+  <Reserves></Reserves> -->
 </div>
 </template>
 
@@ -78,6 +78,11 @@ export default {
       items:[]
     }
   },
+  // beforeRouteEnter(to, from, next){
+  //   if (to.query.redirectFrom) {
+  //   console.log("Usted no tiene permisos");
+  //   }
+  // },
   computed:{
     ...roomModule.mapState(["rooms"])
   },
