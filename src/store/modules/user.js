@@ -45,7 +45,7 @@ export const user = {
           switch (status) {
             case 200:
               commit(Mutations.SET_TOKEN, data);
-              // commit(Mutations.SET_USER, userinfo);
+              commit(Mutations.SET_USER, body.username);
               break;
             default:
               console.log("Ocurrio un error, en inicio de sesión");
