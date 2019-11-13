@@ -35,6 +35,7 @@
     "vue-chartjs": "^3.4.2",
     "vue-flag-icon": "^1.0.6",
     "vue-i18n": "^8.0.0",
+    "vue-multiselect": "^2.1.6",
     "vue-perfect-scrollbar": "^0.1.0",
     "vue-router": "^3.0.6",
     "vue-star-rating": "^1.6.1",
