@@ -35,12 +35,13 @@ function getInfo(){
                 });
                 var status;
                 if (element.activo){
-                  status="Active";
+                  status="Activo";
                 }else{
-                  status="Inactive";
+                  status="Inactivo";
                 }
                 reserves.push({
-                    asigned: element.responsable.first_name +" "+element.responsable.last_name, 
+                    asigned: element.responsable.first_name +" "+element.responsable.last_name,
+                    ccUser: element.usuario.cedula, 
                     client: element.usuario.first_name +" "+element.usuario.last_name, 
                     checkIn: element.fechaInicio, 
                     checkOut: element.fechaFin, 

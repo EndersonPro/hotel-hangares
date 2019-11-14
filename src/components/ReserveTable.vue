@@ -9,7 +9,7 @@
         <b-button v-b-modal.modal-prevent-closing size="sm" @click="generateBill(data.item)" variant="success" class="btn mr-2">
           <i class="fa fa-dollar"></i>
         </b-button>
-        <b-button size="sm" variant="primary" class="btn mr-2">
+        <b-button v-b-modal.modal-edit-reserve size="sm" variant="primary" @click="editReserve(data.item)" class="btn mr-2">
           <i class="fa fa-pencil"></i>
         </b-button>
         <b-button size="sm" variant="danger" @click="deleteRow(data.item)" class="mr-2">
@@ -23,7 +23,7 @@
       ref="modal"
       title="Factura"
       @hidden="resetModal"
-      @ok="saveBill"
+      hide-footer
     >
       <form ref="form" @submit.stop.prevent="saveBill">
           <b-row>
@@ -33,7 +33,6 @@
               <b-form-input class="border-0" disabled
                 id="resp-input"
                 v-model="fecha"
-                :state="respState"
                 required
               ></b-form-input>
             </b-form-group>
@@ -66,7 +65,6 @@
               <b-form-input class="border-0" disabled
                 id="resp-input"
                 v-model="responsable"
-                :state="respState"
                 required
               ></b-form-input>
             </b-form-group>
@@ -124,13 +122,23 @@
             </b-form-group>
           </b-col>
           <b-col colmd="6">
-              <b-button v-b-modal.modal-prevent-closing size="sm" @click="generateBill(data.item)" variant="success" class="btn mr-2">
+              <b-button v-if="status=='Activo'" type="submit" variant="success" class="btn mr-2 cobrar">
                  Cobrar <i class="fa fa-dollar"></i>
               </b-button>
             </b-col>
         </b-row>
       </form>
     </b-modal>
+   <b-modal
+      size="xl"
+      id="modal-edit-reserve"
+      ref="modal"
+      title=""
+      @hidden="resetModal"
+      hide-footer
+    >
+      <EditReserve :title="'Editar Reserva'" :edit="true" :reserveObject="currentRow"></EditReserve>
+   </b-modal>
     <nav>
       <b-pagination :total-rows="totalRows" :per-page="perPage" v-model="currentPage" prev-text="Prev" next-text="Next" hide-goto-end-buttons/>
     </nav>
@@ -139,6 +147,7 @@
 
 <script>
 import axios from 'axios';
+import EditReserve from "@/views/pages/NuevaReserva";
 
 export default {
   name: 'c-table',
@@ -188,17 +197,22 @@ export default {
   data: () => {
     return {
       currentPage: 1,
+      currentRow:null,
       responsable: "",
-      respState: "",
+      idReserve: "",
       cliente:"",
       fecha: "",
       checkIn:"",
+      status:"",
       checkOut:"",
       subTotal: 0,
       total: 0,
       descuento:0,
       habitaciones:[]
     }
+  },
+  components:{
+    EditReserve
   },
   computed: {
     items: function() {
@@ -210,8 +224,8 @@ export default {
   },
   methods: {
     getBadge (status) {
-      return status === 'Active' ? 'success'
-        : status === 'Inactive' ? 'danger'
+      return status === 'Activo' ? 'success'
+        : status === 'Inactivo' ? 'danger'
           : status === 'Pending' ? 'warning'
             : status === 'Banned' ? 'danger' : 'primary'
     },
@@ -239,7 +253,7 @@ export default {
         
         switch (status) {
           case 200:
-              row.status="Inactive";
+              row.status="Inactivo";
               row.roomsObject.forEach(e => {
                   axios.patch("http://localhost:8000/api/v1.0/rooms/"+e.id+"/",
                   {
@@ -263,11 +277,7 @@ export default {
       })
       .catch(err => console.error);     
     },
-    checkFormValidity() {
-        const valid = this.$refs.form.checkValidity()
-        this.respState = valid ? 'valid' : 'invalid'
-        return valid
-    },
+
     resetModal() {
       this.responsable = ''
       this.cliente = '';
@@ -279,11 +289,14 @@ export default {
       this.descuento = 0;
     },
     generateBill(row){
+      this.currentRow = row;
       this.fecha = new Date().toISOString().slice(0, 10)
       this.responsable = row.asigned;
       this.cliente = row.client;
       this.checkIn= row.checkIn;
       this.checkOut = row.checkOut;
+      this.idReserve = row.actions;
+      this.status = row.status;
       row.roomsObject.forEach(e => {
         this.subTotal+= parseFloat(e.precio);
         this.habitaciones.push(
@@ -295,14 +308,57 @@ export default {
         )
       });
       this.total = this.subTotal - this.descuento;
-      console.log(this.total);
     },
     saveBill(){
 
-      console.log("save")
+      let token = this.$store.state.user.token;
+      let opts = {
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+          }
+      };
+      let bill = {
+        fecha: this.fecha,
+        descuento: this.descuento,
+        reserva: this.idReserve
+      };
+
+			this.$swal({
+				title: "¿Estás seguro?",
+				text: "El registro de pago sera asignado a la base de datos",
+				icon: "warning",
+				buttons: true,
+				dangerMode: true,
+			  })
+			  .then((willDelete) => {
+				if (willDelete) {
+					try {
+
+            let { status, data } = axios.post("http://localhost:8000/api/v1.0/bills/",bill, opts)
+            .then(response => {
+                    let { status, data } = response;
+                    switch (status) {
+                        case 201:
+                            this.deleteRow(this.currentRow);
+                            swal("Guardado","La reserva ha sido cobrada","success");    
+                          break;
+                        default:
+                          console.log("Ocurrio un error, en el proceso de cobro");
+                    }
+                  })
+                  .catch(err => console.error); 
+
+            
+					} catch (err) {
+						console.log(err);
+					}
+				}
+			  });	
+      
     },
     editReserve(row){
-
+      this.currentRow = row;
     }
   }
 }
@@ -310,5 +366,9 @@ export default {
 <style lang="scss" scoped>
 .form-control{
   background: #ffffff;
+}
+.cobrar{
+  margin-top: 27px;
+  margin-left: 110px;
 }
 </style>
