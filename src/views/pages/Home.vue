@@ -1,14 +1,14 @@
 <template>
 <div>
   <div class="bg_hotel">
-    <b-container>
+    <!-- <b-container>
       <NavBar></NavBar>
-    </b-container>
+    </b-container> -->
     <b-container class="_container">
       <b-row>
         <b-col cols="12">
           <span class="_title">HOTEL</span> 
-          <span class="_title" >
+          <span class="_title">
             <svg
               width="4"
               height="69"
@@ -24,7 +24,7 @@
       </b-row>
       <b-row class="_buttons_actions">
         <b-col cols="12" md="3">
-          <b-button variant="outline-primary">Reservar</b-button>
+          <b-button variant="outline-primary"><router-link to="/reserva">Reservar</router-link> </b-button>
         </b-col>
         <b-col cols="12" md="3">
           <b-button variant="primary"><router-link to="/signup" >Registrarse</router-link></b-button>
@@ -32,10 +32,12 @@
       </b-row>
     </b-container>
 	</div>
+  <!-- 
+    <b-container style="position:relative; top:-2.5em">
+      <SearchBar></SearchBar>
+    </b-container> -->
+  <!-- 
 
-  <!-- <SearchBar></SearchBar>
-
-  <Services></Services>
 
  <div id="colorlib-rooms" class="colorlib-light-grey">
     <b-container>
@@ -52,9 +54,10 @@
     </b-container>
   </div>
 
-  <Testimonials></Testimonials>
 
   <Reserves></Reserves> -->
+  <Services></Services>
+  <Testimonials></Testimonials>
 </div>
 </template>
 
@@ -104,7 +107,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 
 .bg_hotel {
   background: linear-gradient(122.09deg, #3c3a3a 0%, rgba(0, 0, 0, 0.14) 99.2%),
@@ -113,7 +116,7 @@ export default {
   background-repeat: no-repeat;
 }
 ._container {
-  height: 95vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;

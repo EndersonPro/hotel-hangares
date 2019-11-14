@@ -57,10 +57,14 @@ const Login = () => import('@/views/pages/Login');
 const Register = () => import('@/views/pages/Register');
 const NuevaReserva = () => import('@/views/pages/NuevaReserva');
 const ListReserves = () => import('@/views/pages/ListReserves');
+const NewReserveClient = () => import('@/views/pages/NuevaReservaCliente');
 
 // Users
 const Users = () => import('@/views/users/Users');
 const User = () => import('@/views/users/User');
+
+//Componentes Personales
+const NavBar = () => import('@/components/Nav');
 
 Vue.use(Router);
 
@@ -68,10 +72,20 @@ function configRoutes() {
   return [
     {
       path: '/',
-      // redirect: '/dashboard',
-      name: 'Home',
-      component: Home,
-      // component: DefaultContainer,
+      name: 'NavBar',
+      component: NavBar,
+      children: [
+        {
+          path: '',
+          name: 'Home',
+          component: Home,
+        },
+        {
+          path: '/reserva',
+          name: 'NewReserveClient',
+          component: NewReserveClient,
+        },
+      ],
     },
     {
       path: '/recepcion',
@@ -336,38 +350,38 @@ function configRoutes() {
       name: 'LogIn',
       component: Login,
     },
-    {
-      path: '/pages',
-      redirect: '/pages/404',
-      name: 'Pages',
-      component: {
-        render(c) {
-          return c('router-view');
-        },
-      },
-      children: [
-        {
-          path: '404',
-          name: 'Page404',
-          component: Page404,
-        },
-        {
-          path: '500',
-          name: 'Page500',
-          component: Page500,
-        },
-        // {
-        //   path: 'login',
-        //   name: 'Login',
-        //   component: Login
-        // },
-        {
-          path: 'register',
-          name: 'Register',
-          component: Register,
-        },
-      ],
-    },
+    // {
+    //   path: '/pages',
+    //   redirect: '/pages/404',
+    //   name: 'Pages',
+    //   component: {
+    //     render(c) {
+    //       return c('router-view');
+    //     },
+    //   },
+    //   children: [
+    //     {
+    //       path: '404',
+    //       name: 'Page404',
+    //       component: Page404,
+    //     },
+    //     {
+    //       path: '500',
+    //       name: 'Page500',
+    //       component: Page500,
+    //     },
+    //     // {
+    //     //   path: 'login',
+    //     //   name: 'Login',
+    //     //   component: Login
+    //     // },
+    //     {
+    //       path: 'register',
+    //       name: 'Register',
+    //       component: Register,
+    //     },
+    //   ],
+    // },
   ];
 }
 

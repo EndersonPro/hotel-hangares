@@ -1,7 +1,9 @@
 <template>
+<div>
     <router-view></router-view>
+</div>
   <!-- <transition name="slide-fade">
-  </transition> -->
+  </transition> --> 
 </template>
 
 <script>
@@ -42,4 +44,6 @@ $simple-line-font-path: "~simple-line-icons/fonts/";
   transform: translateX(10px);
   opacity: 0;
 }
+
+
 </style>

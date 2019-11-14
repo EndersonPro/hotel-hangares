@@ -7,12 +7,12 @@ export const onlyAdmin = (to, from, next) => {
 
 export const onlyReceptionist = async (to, from, next) => {
   const userType = await store.getters['user/getUser'].type_user;
-  if (userType === 2) {
+  if (userType === 3) {
     next();
   } else {
     next({
       name: 'Home',
-      query: { redirectFrom: to.fullPath },
+      // query: { redirectFrom: to.fullPath },
     });
   }
 };
