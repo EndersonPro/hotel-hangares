@@ -19,7 +19,7 @@
 
 <script>
 import { shuffleArray } from '@/shared/utils'
-import cTable from './Table.vue'
+import cTable from './ReserveTable.vue'
 import axios from 'axios'
 
 function getInfo(){
@@ -28,7 +28,6 @@ function getInfo(){
         let { status, data } = response;
         switch (status) {
         case 200:
-            
             data.forEach(element => {
                 var roomsReserved = ""
                 element.habitaciones.forEach(e => {
@@ -41,8 +40,8 @@ function getInfo(){
                   status="Inactive";
                 }
                 reserves.push({
-                    asigned: element.responsable.username, 
-                    client: element.usuario.username, 
+                    asigned: element.responsable.first_name +" "+element.responsable.last_name, 
+                    client: element.usuario.first_name +" "+element.usuario.last_name, 
                     checkIn: element.fechaInicio, 
                     checkOut: element.fechaFin, 
                     rooms: roomsReserved, 

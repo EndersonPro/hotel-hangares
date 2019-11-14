@@ -35,7 +35,7 @@
 
   <SearchBar></SearchBar>
 
-  <Services></Services>
+  <!-- <Services></Services> -->
 
  <div id="colorlib-rooms" class="colorlib-light-grey">
     <b-container>

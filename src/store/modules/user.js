@@ -23,21 +23,20 @@ export const user = {
       state.refresh = refresh;
     },
     [Mutations.DELETE_USER](state) {
-      state.token = '';
-      state.refresh = '';
+      state.token = null;
+      state.refresh = null;
       state.user = {};
     },
   },
   actions: {
-    [Action.USER_LOGIN]({ commit }, { userinfo, body }) {
+    async [Action.USER_LOGIN]({ commit }, { userinfo, body }) {
       console.log('Entro si o no? en esa monda');
       let opts = {
         headers: {
           'Content-Type': 'application/json',
         },
       };
-      axios
-        .post(
+      await axios.post(
           'http://localhost:8000/api/v1.0/token/',
           { username: body.username, password: body.password },
           opts,

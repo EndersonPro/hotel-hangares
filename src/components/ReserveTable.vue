@@ -18,7 +18,7 @@
       </template>
     </b-table>
     <b-modal
-      size="lg"
+      size="md"
       id="modal-prevent-closing"
       ref="modal"
       title="Factura"
@@ -26,11 +26,44 @@
       @ok="saveBill"
     >
       <form ref="form" @submit.stop.prevent="saveBill">
+          <b-row>
+          <b-col colmd="4">
+            <b-form-group>
+            <strong><label>Fecha:</label></strong>
+              <b-form-input class="border-0" disabled
+                id="resp-input"
+                v-model="fecha"
+                :state="respState"
+                required
+              ></b-form-input>
+            </b-form-group>
+          </b-col>
+          <b-col colmd="4">
+            <b-form-group>
+              <strong><label>Check In:</label></strong>
+              <b-form-input class="border-0" disabled
+                id="chkIn-input"
+                v-model="checkIn"
+                required
+              ></b-form-input>
+            </b-form-group>
+          </b-col>
+          <b-col colmd="4">
+            <b-form-group>
+              <strong><label>Check Out:</label></strong>
+              <b-form-input class="border-0" disabled
+                id="chkOut-input"
+                v-model="checkOut"
+                required
+              ></b-form-input>
+            </b-form-group>
+          </b-col>
+        </b-row>
         <b-row>
           <b-col colmd="6">
             <b-form-group>
             <strong><label>Responsable:</label></strong>
-              <b-form-input class="border-0"
+              <b-form-input class="border-0" disabled
                 id="resp-input"
                 v-model="responsable"
                 :state="respState"
@@ -41,31 +74,9 @@
           <b-col colmd="6">
             <b-form-group>
               <strong><label>Cliente:</label></strong>
-              <b-form-input class="border-0"
+              <b-form-input class="border-0" disabled
                 id="cli-input"
                 v-model="cliente"
-                required
-              ></b-form-input>
-            </b-form-group>
-          </b-col>
-        </b-row>
-          <b-row>
-          <b-col colmd="6">
-            <b-form-group>
-              <strong><label>Check In:</label></strong>
-              <b-form-input class="border-0"
-                id="chkIn-input"
-                v-model="checkIn"
-                required
-              ></b-form-input>
-            </b-form-group>
-          </b-col>
-          <b-col colmd="6">
-            <b-form-group>
-              <strong><label>Check Out:</label></strong>
-              <b-form-input class="border-0"
-                id="chkOut-input"
-                v-model="checkOut"
                 required
               ></b-form-input>
             </b-form-group>
@@ -83,7 +94,7 @@
           <b-col colmd="6">
             <b-form-group>
               <strong><label>Descuento:</label></strong>
-              <b-form-input class="border-0"
+              <b-form-input class="border-0" disabled
                 id="desc-input"
                 v-model="descuento"
                 required
@@ -93,7 +104,7 @@
           <b-col colmd="6">
             <b-form-group>
               <strong><label>Sub Total:</label></strong>
-              <b-form-input class="border-0"
+              <b-form-input class="border-0" disabled
                 id="total-input"
                 v-model="subTotal"
                 required
@@ -105,7 +116,7 @@
           <b-col colmd="6">
             <b-form-group>
               <strong><label>Total a pagar:</label></strong>
-              <b-form-input class="border-0"
+              <b-form-input class="border-0" disabled
                 id="total-input"
                 v-model="total"
                 required
@@ -175,6 +186,7 @@ export default {
       responsable: "",
       respState: "",
       cliente:"",
+      fecha: "",
       checkIn:"",
       checkOut:"",
       subTotal: 0,
@@ -262,7 +274,7 @@ export default {
       this.descuento = 0;
     },
     generateBill(row){
-      console.log(row)
+      this.fecha = new Date().toISOString().slice(0, 10)
       this.responsable = row.asigned;
       this.cliente = row.client;
       this.checkIn= row.checkIn;
@@ -281,6 +293,7 @@ export default {
       console.log(this.total);
     },
     saveBill(){
+
       console.log("save")
     },
     editReserve(row){
@@ -290,4 +303,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.form-control{
+  background: #ffffff;
+}
 </style>

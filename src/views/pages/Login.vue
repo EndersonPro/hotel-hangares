@@ -280,7 +280,7 @@ export default {
   methods: {
     ...UIModule.mapActions([UIAction.ERROR_SIGNUP, UIAction.IS_LOADING]),
     ...userModule.mapActions([Action.USER_LOGIN]),
-    handlerSubmit() {
+    async handlerSubmit() {
       this.$v.$touch();
       if (this.$v.$invalid) {
       } else {
@@ -298,8 +298,8 @@ export default {
         this[UIAction.IS_LOADING]();
         try {
           if (this.getToken == null) {
-            this.USER_LOGIN({ body });
-            // this.$router.push("/recepcion");
+            await this.USER_LOGIN({ body });
+            this.$router.push("/recepcion");
           }
         } catch (error) {
           console.error(error);

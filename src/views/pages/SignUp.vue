@@ -138,10 +138,55 @@
                       </b-input-group-prepend>
                       <b-form-input
                         type="text"
+                        v-model="$v.form.username.$model"
+                        :state="$v.form.username.$dirty ? !$v.form.username.$error : null"
+                        class="form-control"
+                        :placeholder="$t('signup.username')"
+                      />
+                      <b-form-invalid-feedback id="input-1-live-feedback">{{ $t('signup.errors.field') }}</b-form-invalid-feedback>
+                    </b-input-group>
+                    <b-input-group class="mb-3">
+                      <b-input-group-prepend>
+                        <b-input-group-text>
+                          <i class="fa fa-user fa-lg"></i>
+                        </b-input-group-text>
+                      </b-input-group-prepend>
+                      <b-form-input
+                        type="text"
                         v-model="$v.form.nombre.$model"
                         :state="$v.form.nombre.$dirty ? !$v.form.nombre.$error : null"
                         class="form-control"
-                        :placeholder="$t('signup.names')"
+                        :placeholder="$t('signup.name')"
+                      />
+                      <b-form-invalid-feedback id="input-1-live-feedback">{{ $t('signup.errors.field') }}</b-form-invalid-feedback>
+                    </b-input-group>
+                    <b-input-group class="mb-3">
+                      <b-input-group-prepend>
+                        <b-input-group-text>
+                          <i class="fa fa-user fa-lg"></i>
+                        </b-input-group-text>
+                      </b-input-group-prepend>
+                      <b-form-input
+                        type="text"
+                        v-model="$v.form.apellido.$model"
+                        :state="$v.form.apellido.$dirty ? !$v.form.apellido.$error : null"
+                        class="form-control"
+                        :placeholder="$t('signup.lastname')"
+                      />
+                      <b-form-invalid-feedback id="input-1-live-feedback">{{ $t('signup.errors.field') }}</b-form-invalid-feedback>
+                    </b-input-group>
+                    <b-input-group class="mb-3">
+                      <b-input-group-prepend>
+                        <b-input-group-text>
+                          <i class="fa fa-id-card fa-lg"></i>
+                        </b-input-group-text>
+                      </b-input-group-prepend>
+                      <b-form-input
+                        type="tel"
+                        v-model="$v.form.cedula.$model"
+                        class="form-control"
+                        :state="$v.form.cedula.$dirty ? !$v.form.cedula.$error : null"
+                        :placeholder="$t('signup.cc')"
                       />
                       <b-form-invalid-feedback id="input-1-live-feedback">{{ $t('signup.errors.field') }}</b-form-invalid-feedback>
                     </b-input-group>
@@ -234,7 +279,7 @@
         </b-row>
         <b-row class="pt-2">
           <b-col class="d-flex justify-content-end" md="11">
-            <span>
+            <span class="login-message">
               {{$t('signup.signin.msg')}}
               <router-link to="/login">{{ $t('signup.signin.link') }}</router-link>
             </span>
@@ -262,7 +307,10 @@ export default {
   data() {
     return {
       form: {
+        username:null,
         nombre: null,
+        apellido: null,
+        cedula: null,
         email: null,
         password: null,
         repeat_password: null,
@@ -278,7 +326,16 @@ export default {
   },
   validations: {
     form: {
+      username:{
+        required
+      },
       nombre: {
+        required
+      },
+      apellido:{
+        required
+      },
+      cedula:{
         required
       },
       email: {
@@ -327,7 +384,9 @@ export default {
         };
 
         let body = {
-          nombres: this.form.nombre,
+          first_name: this.form.nombre,
+          last_name: this.form.apellido,
+          cedula: this.form.cedula,
           phone: this.form.phone,
           password: this.form.password,
           email: this.form.email,
@@ -346,7 +405,9 @@ export default {
           switch (status) {
             case 201:
               console.log("Entre con estatus 201");
-              this[Action.USER_SIGNUP]({ data, body });
+              if(this.$store.state.user.token==null){
+                this[Action.USER_SIGNUP]({ data, body });
+              }
               break;
             default:
               console.log("Ocurrio un error");
@@ -361,7 +422,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .form-control {
   background-color: #f0f3f5;
 }
