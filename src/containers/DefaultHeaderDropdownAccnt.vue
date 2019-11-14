@@ -69,7 +69,7 @@ export default {
     }
   },
   beforeMount(){
-    if (this.$store.state.user.token == ''){
+    if (this.$store.state.user.token == null){
       this.$router.push("/login");
     }
   }

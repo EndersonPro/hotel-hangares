@@ -9,7 +9,10 @@
   },
   "signup": {
     "title":"Registrarse",
-    "names": "Nombres",
+    "username":"Username",
+    "name": "Nombre",
+    "lastname": "Apellido",
+    "cc":"Cedula",
     "email": "Correo",
     "cel": "Telefono",
     "password": "Contraseña",

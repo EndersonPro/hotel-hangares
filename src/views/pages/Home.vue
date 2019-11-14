@@ -38,6 +38,8 @@
     </b-container> -->
   <!-- 
 
+  <SearchBar></SearchBar>
+<Services></Services> -->
 
  <div id="colorlib-rooms" class="colorlib-light-grey">
     <b-container>
