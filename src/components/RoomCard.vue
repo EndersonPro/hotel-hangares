@@ -153,8 +153,8 @@ h2 a{
     
 }
 .room-wrap {
-  margin-bottom: 2em; 
-  width: 380px;
+//   margin-bottom: 2em; 
+  width: 100%;
   }
     
  .room {
