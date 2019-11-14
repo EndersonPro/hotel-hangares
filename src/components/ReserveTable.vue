@@ -134,7 +134,7 @@
       id="modal-edit-reserve"
       ref="modal"
       title=""
-      @hidden="resetModal"
+      @hidden="updateComponent"
       hide-footer
     >
       <EditReserve :title="'Editar Reserva'" :edit="true" :reserveObject="currentRow"></EditReserve>
@@ -359,6 +359,9 @@ export default {
     },
     editReserve(row){
       this.currentRow = row;
+    },
+    updateComponent(){
+      // this.$router.push("/recepcion/lista-reservas");
     }
   }
 }

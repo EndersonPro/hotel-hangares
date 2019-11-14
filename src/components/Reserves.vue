@@ -78,6 +78,14 @@ export default {
       ],
     }
   },
+  methods:{
+    updateComponent(){
+      this.$forceUpdate();
+    }
+  },
+  watch:{
+
+  },
   mounted(){
 
   }

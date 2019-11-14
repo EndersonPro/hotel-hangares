@@ -129,8 +129,9 @@
             </b-row>
           </b-card-body>
           <div slot="footer">
-            <b-button type="submit" class="save-btn"  variant="success" @click="saveReserve"><i class="fa fa-save"></i> Guardar</b-button>
-            <b-button v-b-modal.modal-prevent-closing type="reset" variant="primary"><i class="fa fa-pencil"></i> Registrar Cliente</b-button>
+            <b-button v-if="edit" type="submit" class="save-btn"  variant="success" @click="editReserve"><i class="fa fa-save"></i> Editar</b-button>
+            <b-button v-else type="submit" class="save-btn"  variant="success" @click="saveReserve"><i class="fa fa-save"></i> Guardar</b-button>
+            <b-button v-show="!edit" v-b-modal.modal-prevent-closing type="reset" variant="primary"><i class="fa fa-pencil"></i> Registrar Cliente</b-button>
           </div>
         </b-card>
 
@@ -167,10 +168,6 @@ export default {
       type: Boolean,
       default: false
     },
-    userObject:{
-      type: Object,
-      default: ()=>{}
-    },
     reserveObject:{
       type: Object,
       default:()=>{}
@@ -192,6 +189,7 @@ export default {
         checkOut:"",
         reserved: 0,
         typeRoom: null,
+        assignedRooms: [],
         optionsReserved:[
           { value: 0, text: 'No' }
         ],
@@ -212,14 +210,9 @@ export default {
   },
   watch:{
     rooms(newRooms, oldRooms){
-
-      if(this.box !=[]){
-        this.box = [];
-      }
       newRooms.forEach(element => {
         this.dataRooms.push(element)
       });
-      this.box.push({tipo: "Multiselect",id:0});
     }
   },
   methods:{
@@ -266,6 +259,29 @@ export default {
               this.email = data[0].email;
               this.idCliente = data[0].id;
               this.phone = data[0].phone;
+              break;
+            default:
+              console.log('Ocurrio un error al cargar los usuarios');
+          }
+        }).catch(err => console.error);
+    },
+    async getAssignedRooms(id){
+      let token = this.$store.state.user.token;
+      var cedula = this.cedulaCliente;
+      await axios.get('http://localhost:8000/api/v1.0/reservedrooms/',{
+          headers: {
+            "Authorization": `Bearer ${token}`
+          },
+          params:{
+            reserva:id
+          }
+       },
+       ).then(response => {
+          let { status, data } = response;
+          switch (status) {
+            case 200:
+              this.assignedRooms = data;
+              console.log(this.assignedRooms)
               break;
             default:
               console.log('Ocurrio un error al cargar los usuarios');
@@ -340,6 +356,87 @@ export default {
       }else{
         this.$swal('Error','La reserva no ha sido creada!',"error");
       }
+    },
+    async editReserve(){
+
+      var deletedRooms = this.reserveObject.roomsObject.filter(element => this.roomSelected.indexOf(element)==-1);
+      var addedRooms = this.roomSelected.filter(element => this.reserveObject.roomsObject.indexOf(element)==-1);
+
+      let token = this.$store.state.user.token;
+      let opts = {
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+          }
+      };
+
+      let reserve = {
+        fechaInicio: this.checkIn,
+        fechaFin: this.checkOut,
+        usuario: this.idCliente,
+        responsable: this.idRespUser,
+        habitaciones: []
+      }
+
+      await axios.patch("http://localhost:8000/api/v1.0/reserves/"+this.reserveObject.actions+"/",reserve,opts).then(response => {
+
+        let { status, data } = response;
+        switch (status) {
+          case 200:
+            console.log("edit");
+            deletedRooms.forEach(element => {
+                var idAssigned = this.assignedRooms.find(e=>e.reserva==data.id && e.habitacion == element.id).id;
+                  axios
+                  .delete("http://localhost:8000/api/v1.0/reservedrooms/"+idAssigned+"/",opts).then(response => {
+
+                      let { status, data } = response;
+                      switch (status) {
+                        case 204:
+
+                          break;
+                        default:
+                          console.log("Ocurrio un error, en la asignacion");
+                      }
+                    })
+                    .catch(err => console.error);                  
+              });
+              addedRooms.forEach(element => {
+                    let room = {
+                      reserva: data.id,
+                      habitacion: element.id,
+                      precioVenta: element.precio,
+                    }
+                     axios
+                        .post(
+                          "http://localhost:8000/api/v1.0/reservedrooms/", room,opts).then(response => {
+
+                          let { status, data } = response;
+                          switch (status) {
+                            case 201:
+
+                              break;
+                            default:
+                              console.log("Ocurrio un error, en la asignacion");
+                          }
+                        })
+                        .catch(err => console.error);                  
+                });
+              
+              this.$swal({
+                title: "Reserva Actualizada",
+                text: "La informacion de la reserva fue actualizada con exito",
+                icon: "success",
+                })
+                .then((data) => {
+                    this.$router.push("/recepcion");
+                });	
+                
+            break;
+          default:
+            console.log("Ocurrio un error, en la cancelacion");
+        }
+      })
+      .catch(err => console.error); 
     }
   },
   mounted(){
@@ -352,6 +449,7 @@ export default {
       this.reserveObject.roomsObject.forEach(element => {
         this.roomSelected.push(element);
       });
+      this.getAssignedRooms(this.reserveObject.actions);
     }
   }
 };
