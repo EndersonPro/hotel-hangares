@@ -344,15 +344,14 @@ export default {
   },
   mounted(){
     if(this.edit){
-      console.log(this.reserveObject.roomsObject);
       this.cedulaCliente = this.reserveObject.ccUser;
       this.getUser();
       this.checkIn = this.reserveObject.checkIn;
       this.checkOut = this.reserveObject.checkOut;
+      this.showRooms();
       this.reserveObject.roomsObject.forEach(element => {
         this.roomSelected.push(element);
       });
-      this.showRooms();
     }
   }
 };
