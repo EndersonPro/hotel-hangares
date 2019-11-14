@@ -1,6 +1,6 @@
 <template>
 <div>
-  <h1>Nueva reserva</h1>
+  <h1>{{title}}</h1>
     <b-container>
       <b-card no-body :no-block="true">
           <div slot="header">
@@ -9,7 +9,7 @@
           <b-card-body>
             <b-row> 
               <b-col colmd="12" class="search-wrap">
-              <b-form @submit.prevent="handlerSubmit" class="colorlib-form">
+              <b-form @submit.prevent="showRooms" class="colorlib-form">
                     <b-row>
                         <b-col colmd="3">
                           <b-form-group>
@@ -139,6 +139,7 @@
       id="modal-prevent-closing"
       ref="modal"
       title="Registrar Usuario"
+      hide-footer
     >
     <Register></Register>
     </b-modal>
@@ -157,8 +158,27 @@ const roomModule = createNamespacedHelpers("room/");
 
 export default {
   name: "NuevaReserva",
+  props:{
+    title:{
+      type: String,
+      default: "Nueva Reserva"
+    },
+    edit:{
+      type: Boolean,
+      default: false
+    },
+    userObject:{
+      type: Object,
+      default: ()=>{}
+    },
+    reserveObject:{
+      type: Object,
+      default:()=>{}
+    }
+  },
   data(){
       return {
+        
         idRespUser: this.$store.state.user.user.user_id,
         cedulaCliente:null,
         idCliente: null,
@@ -170,7 +190,7 @@ export default {
         dataRooms:[],
         checkIn:"",
         checkOut:"",
-        reserved: null,
+        reserved: 0,
         typeRoom: null,
         optionsReserved:[
           { value: 0, text: 'No' }
@@ -204,10 +224,10 @@ export default {
   },
   methods:{
     ...roomModule.mapActions([Action.FILTER_RESERVED,Action.FILTER_DATE]),
-    handlerSubmit() {
+    showRooms() {
           this.dataRooms=[];
           this.roomSelected = [];
-          if(this.reserved == 0 && this.checkIn != "" && this.checkOut != "" && this.typeRoom!=null){
+          if(this.reserved == 0 && this.checkIn != "" && this.checkOut != ""){
             let roomParams = {
               reservada: this.reserved,
               tipoHabitacion: this.typeRoom
@@ -222,7 +242,7 @@ export default {
               console.log(error);
             }
           }else{
-            this.$swal("Busqueda Incompleta", "Asegurate de llenar todos los campos", "warning");
+            this.$swal("Busqueda Incompleta", "Asegurate de llenar los 3 primeros campos", "warning");
           }
     },
     async getUser(){
@@ -323,7 +343,17 @@ export default {
     }
   },
   mounted(){
-
+    if(this.edit){
+      console.log(this.reserveObject.roomsObject);
+      this.cedulaCliente = this.reserveObject.ccUser;
+      this.getUser();
+      this.checkIn = this.reserveObject.checkIn;
+      this.checkOut = this.reserveObject.checkOut;
+      this.reserveObject.roomsObject.forEach(element => {
+        this.roomSelected.push(element);
+      });
+      this.showRooms();
+    }
   }
 };
 </script>
