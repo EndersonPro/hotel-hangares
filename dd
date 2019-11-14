@@ -1,0 +1,148 @@
+[33mcommit 3fee4ff168bd825833cf9c1acd6a088f32d9ef55[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Merge: 39203d6 891befc
+Author: Enderson Vizcaino <enjaviga@gmail.com>
+Date:   Wed Nov 13 23:31:23 2019 -0500
+
+    Merge
+
+[33mcommit 891befca66e7a78edb258826ce9d4be4537a347d[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: chrisr04 <christian971204@gmail.com>
+Date:   Wed Nov 13 23:24:46 2019 -0500
+
+    little change
+
+[33mcommit 0796c435404f20414897c1cae8892d875632534c[m
+Author: chrisr04 <christian971204@gmail.com>
+Date:   Wed Nov 13 23:14:03 2019 -0500
+
+    add cedula
+
+[33mcommit 39203d6cea3579002778c361e337efe1e89c135d[m
+Author: Enderson Vizcaino <enjaviga@gmail.com>
+Date:   Wed Nov 13 23:01:33 2019 -0500
+
+    Filtro habitaciones
+
+[33mcommit 8e75d883e32d914e526791701170c4fa5ddc1b59[m
+Merge: 77f05b3 216e243
+Author: Enderson Vizcaino <enjaviga@gmail.com>
+Date:   Wed Nov 13 14:16:36 2019 -0500
+
+    Merge branch 'master' of https://github.com/EndersonPro/hotel-hangares
+
+[33mcommit 216e243d1c4370b9f5756458ccb04158655ee915[m
+Author: chrisr04 <christian971204@gmail.com>
+Date:   Wed Nov 13 13:00:59 2019 -0500
+
+    delete reserve and facture
+
+[33mcommit 77f05b3ba248419f49f355ad466ea86cfc4aa4a5[m
+Merge: 9482628 8a0170a
+Author: Enderson Vizcaino <enjaviga@gmail.com>
+Date:   Tue Nov 12 23:21:09 2019 -0500
+
+    Merge branch 'master' of https://github.com/EndersonPro/hotel-hangares
+
+[33mcommit 8a0170a8715946be9062b2d55b009c1d0ac22e04[m
+Author: chrisr04 <christian971204@gmail.com>
+Date:   Tue Nov 12 23:19:49 2019 -0500
+
+    user merge
+
+[33mcommit 9482628f38cf3764a77f01ed3dd7c65f5dc67795[m
+Merge: 998b368 b1e27ce
+Author: Enderson Vizcaino <enjaviga@gmail.com>
+Date:   Tue Nov 12 23:19:02 2019 -0500
+
+    Merge branch 'master' of https://github.com/EndersonPro/hotel-hangares
+
+[33mcommit 998b368e48e0987f993d7014a2bcec81bd33890c[m
+Author: Enderson Vizcaino <enjaviga@gmail.com>
+Date:   Tue Nov 12 23:16:34 2019 -0500
+
+    Antes de bajar
+
+[33mcommit b1e27ce1980f3609c8bc4ced419dad3068f8dcce[m
+Merge: 3179286 89962c0
+Author: chrisr04 <christian971204@gmail.com>
+Date:   Tue Nov 12 22:51:35 2019 -0500
+
+    Merge branch 'master' of https://github.com/EndersonPro/hotel-hangares
+
+[33mcommit 31792860fafa179dae43bedfe683b09d7e7ee9b2[m
+Author: chrisr04 <christian971204@gmail.com>
+Date:   Tue Nov 12 22:46:52 2019 -0500
+
+    add reserves for recepcionist
+
+[33mcommit 89962c0339b755e80778aaa584db750b026fd8b7[m
+Author: Enderson Vizcaino <enjaviga@gmail.com>
+Date:   Tue Nov 12 22:11:41 2019 -0500
+
+    Trabajando en el manejo de roles
+
+[33mcommit ea226c2a963223b9c7970682a7235850ab68633e[m
+Author: Enderson Vizcaino <enjaviga@gmail.com>
+Date:   Tue Nov 12 15:35:31 2019 -0500
+
+    Limpiando la plantilla un poco, creando modulo de reservas, trabajar en el formulario :ok_hand:
+
+[33mcommit b00d918099e61f876064fe2e2c6f6de8efee5781[m
+Author: chrisr04 <christian971204@gmail.com>
+Date:   Tue Nov 12 10:14:21 2019 -0500
+
+    add bookroom
+
+[33mcommit c5f427a91e9e4d1f5b2539d52bee4ef9115e9988[m
+Author: chrisr04 <christian971204@gmail.com>
+Date:   Mon Nov 11 23:28:01 2019 -0500
+
+    add filter search and reserves table
+
+[33mcommit 93ff7e5eecb276ff5d4843d6db9b3ba0152b1830[m
+Author: chrisr04 <christian971204@gmail.com>
+Date:   Sun Nov 10 23:21:32 2019 -0500
+
+    search bar + room cards  + services + testimonials
+
+[33mcommit 41553096a2700d4323ff0ade20777486acb60704[m
+Author: chrisr04 <christian971204@gmail.com>
+Date:   Sat Nov 9 12:39:40 2019 -0500
+
+    login and logout
+
+[33mcommit 6b28b240d196a8c062a3f7e1c9c462108fae5878[m
+Author: Enderson Vizcaino <enjaviga@gmail.com>
+Date:   Fri Nov 8 13:02:14 2019 -0500
+
+    Manejando info en las Cookies :cookie:
+
+[33mcommit 2209040b809869cda770a7ffd2eb44cf54c296eb[m
+Author: Enderson Vizcaino <enjaviga@gmail.com>
+Date:   Thu Nov 7 01:00:23 2019 -0500
+
+    Internalizacion de la app :ok_hand: , Seguir trabajando.... :coffee:
+
+[33mcommit cdaf701ea4865b8473ebeb8ab0ca81d134ccb661[m
+Author: Enderson Vizcaino <enjaviga@gmail.com>
+Date:   Tue Nov 5 21:32:51 2019 -0500
+
+    Registro de usuario y login en SignUp :ok_hand:
+
+[33mcommit 637917ee11d080edfeb07d0caf63a777b61e5ff0[m
+Author: Enderson Vizcaino <enjaviga@gmail.com>
+Date:   Sun Oct 27 16:19:30 2019 -0500
+
+    Instalando Vuex para el manejo del estado :ok_hand:
+
+[33mcommit 21958865a11fafcdf60820108f956df510c766d9[m
+Author: Enderson Vizcaino <enjaviga@gmail.com>
+Date:   Sun Oct 27 02:17:23 2019 -0500
+
+    Validando campos y probando con la API
+
+[33mcommit e55a23d4f92d9198279366369f3176639057d340[m
+Author: Enderson Vizcaino <enjaviga@gmail.com>
+Date:   Sat Oct 26 17:42:48 2019 -0500
+
+    Primer commit :ok_hand:
