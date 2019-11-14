@@ -123,6 +123,11 @@
               ></b-form-input>
             </b-form-group>
           </b-col>
+          <b-col colmd="6">
+              <b-button v-b-modal.modal-prevent-closing size="sm" @click="generateBill(data.item)" variant="success" class="btn mr-2">
+                 Cobrar <i class="fa fa-dollar"></i>
+              </b-button>
+            </b-col>
         </b-row>
       </form>
     </b-modal>

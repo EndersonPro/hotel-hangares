@@ -390,7 +390,7 @@ export default {
           phone: this.form.phone,
           password: this.form.password,
           email: this.form.email,
-          username: this.form.nombre.trim()
+          username: this.form.username
         };
 
         this[UIAction.IS_LOADING]();
