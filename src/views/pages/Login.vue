@@ -295,10 +295,11 @@ export default {
           password: this.form.password
         };
 
-        this[UIAction.IS_LOADING]();
+        this[UIAction.IS_LOADING](true);
         try {
           if (this.getToken == null) {
             await this.USER_LOGIN({ body });
+            this[UIAction.IS_LOADING](false);
             this.$router.push("/recepcion");
           }
         } catch (error) {

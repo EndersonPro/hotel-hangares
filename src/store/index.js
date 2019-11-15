@@ -36,16 +36,16 @@ export default new Vuex.Store({
   modules: {
     ui,
     user,
-    room
+    room,
   },
   plugins: [
     createPersistedState({
-      paths: ['user','ui','room'],
+      paths: ['user', 'ui', 'room'],
       storage: {
         getItem: key => Cookies.get(key),
         setItem: (key, value) => Cookies.set(key, value),
-        removeItem: key => Cookies.remove(key)
-      }
-    })
-  ]
+        removeItem: key => Cookies.remove(key),
+      },
+    }),
+  ],
 });
