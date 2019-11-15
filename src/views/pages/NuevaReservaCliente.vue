@@ -27,9 +27,9 @@ import SearchBar from '@/components/SearchBar';
 import SearchBarOld from '@/components/SearchBarOld';
 import RoomCard from '@/components/RoomCard';
 import RoomCardNew from '@/components/RoomCardNew';
-
-import { Action as RoomAction } from "@/store/const/room";
+import { Action as RoomAction } from '@/store/const/room';
 import { createNamespacedHelpers } from "vuex";
+
 const roomModule = createNamespacedHelpers("room/");
 
 
@@ -42,10 +42,13 @@ export default {
         RoomCardNew
     },
     computed:{
-        ...roomModule.mapGetters(["getRooms"])
+        ...roomModule.mapGetters(["getRooms"]),
     },
-    created() {
-      console.log(this.getRooms);  
+    methods:{
+        ...roomModule.mapActions([RoomAction.RESET_ROOM_LIST])
+    },
+    mounted() {
+        this[RoomAction.RESET_ROOM_LIST]()
     },
 }
 </script>

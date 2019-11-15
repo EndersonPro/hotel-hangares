@@ -8,7 +8,6 @@
         :img-src="image"
         img-alt="Image"
         img-top
-        tag="Habitacion"
         style="width: 18rem;max-width: 18rem;"
     >
         <b-card-text>
