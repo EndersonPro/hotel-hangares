@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="container_nav">
+    <div class="container_nav" v-bind:class="{ navhome: isViewHome }" >
       <b-navbar toggleable="lg" type="dark" :variant="variantForRoute">
         <b-navbar-brand href="#"><router-link to="/">HH</router-link></b-navbar-brand>
 
@@ -17,16 +17,18 @@
 
             <!-- <b-nav-item href="#" disabled>Disabled</b-nav-item> -->
 
-            <b-nav-item-dropdown v-if="roomsAdded>0">
-              <!-- Using 'button-content' slot -->
+            <b-nav-item-dropdown v-if="getBookRoom.length > 0">
               <template v-slot:button-content>
-                <em>
-                  <i class="fa fa-book"></i>
-                  <b-badge pill variant="danger">{{roomsAdded}}</b-badge>
-                </em>
+                  <i class="fa fa-heart"></i>
+                  <b-badge pill variant="primary">{{getBookRoom.length }}</b-badge>
               </template>
+              <b-list-group>
+                <b-list-group-item class="d-flex justify-content-between align-items-center" 
+                v-for="(room, index) in getBookRoom" 
+                :key="index">{{ room.tipoHabitacion }} <b-badge variant="primary" pill>{{ room.precio }}</b-badge></b-list-group-item>
+              </b-list-group>
               <b-dropdown-item href="#">Confirmar Reserva</b-dropdown-item>
-              <b-dropdown-item href="#">Vaciar Book Room</b-dropdown-item>
+              <b-dropdown-item @click="EmptyListRoom" href="#">Vaciar Book Room</b-dropdown-item>
             </b-nav-item-dropdown>
 
             <b-nav-item-dropdown right v-if="getToken">
@@ -85,9 +87,13 @@ export default {
   computed: {
     ...UIModule.mapGetters(["getLanguage"]),
     ...roomModule.mapState(["bookRoom"]),
+    ...roomModule.mapGetters(['getBookRoom']),
     ...userModule.mapGetters(["getUser","getToken"]),
     isViewLogin: function() {
       return this.$router.history.current.fullPath == "/login";
+    },
+    isViewHome: function(){
+      return this.$router.history.current.fullPath == "/";
     },
     variantForRoute: function(){
       return this.$router.history.current.name == 'Home' ? null : 'info';
@@ -101,15 +107,28 @@ export default {
     },
     ...UIModule.mapActions([UIAction.CHANGE_LANGUAGE]),
     ...userModule.mapActions([UserAction.USER_LOGOUT]),
+    ...roomModule.mapActions([Action.CLEAR_BOOKROOM]),
     async logout(){
       await this.USER_LOGOUT();
       this.$router.push("/");
+    },
+    EmptyListRoom(){
+        this[Action.CLEAR_BOOKROOM]();
     }
   },
-  watch: {
-    bookRoom(newBookRoom, oldBookRoom) {
-      this.roomsAdded = newBookRoom.length;
-    }
-  }
+  // watch: {
+  //   bookRoom(newBookRoom, oldBookRoom) {
+  //     this.roomsAdded = newBookRoom.length;
+  //   }
+  // },
+  // mounted(){
+  //   console.log(this.isViewHome);
+  // }
 };
 </script>
+<style lang="scss">
+  .navhome{
+    position: absolute;
+    width: 100%;
+  }
+</style>

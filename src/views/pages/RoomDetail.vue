@@ -49,7 +49,10 @@
 
                 <div class="d-flex flex-row justify-content-between">
                     <div>Stars</div>
-                    <b-button variant="info"> Reservar </b-button>
+                    <router-link class="btn btn-primary" to="/confirmar-reserva">
+                    
+                     Reservar 
+                    </router-link>
                 </div>
             </b-col>
         </b-row>
@@ -58,7 +61,10 @@
 
 <script>
 export default {
-    name:"RoomDetail"
+    name:"RoomDetail",
+    props:{
+        rooms: [Object]
+    }
 }
 </script>
 

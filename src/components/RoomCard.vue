@@ -25,9 +25,9 @@
 
 import Vue from 'vue';
 import VueStarRating from 'vue-star-rating'
-import { Action } from "@/store/const/room";
 import { createNamespacedHelpers } from "vuex";
 
+import { Action } from "@/store/const/room";
 const roomModule = createNamespacedHelpers("room/");
 
 let wrapper = document.createElement('div');
