@@ -17,7 +17,7 @@
 
             <!-- <b-nav-item href="#" disabled>Disabled</b-nav-item> -->
 
-            <b-nav-item-dropdown>
+            <b-nav-item-dropdown v-if="roomsAdded>0">
               <!-- Using 'button-content' slot -->
               <template v-slot:button-content>
                 <em>

@@ -9,7 +9,7 @@
                     <RoomCardNew class="mt-2" v-for="room in getRooms"
                         :id="room.id"
                         :key="room.id"
-                        :price="room.price"
+                        :price="room.precio"
                         :type="room.type"
                         :number="room.number"
                         :reserved="room.reserved"

@@ -58,7 +58,7 @@ const Register = () => import('@/views/pages/Register');
 const NuevaReserva = () => import('@/views/pages/NuevaReserva');
 const ListReserves = () => import('@/views/pages/ListReserves');
 const NewReserveClient = () => import('@/views/pages/NuevaReservaCliente');
-
+const DetailRoom = () => import('@/views/pages/RoomDetail');
 // Users
 const Users = () => import('@/views/users/Users');
 const User = () => import('@/views/users/User');
@@ -72,7 +72,6 @@ function configRoutes() {
   return [
     {
       path: '/',
-      name: 'NavBar',
       component: NavBar,
       children: [
         {
@@ -84,6 +83,11 @@ function configRoutes() {
           path: '/reserva',
           name: 'NewReserveClient',
           component: NewReserveClient,
+        },
+        {
+          path: '/detalle-habitacion',
+          name: 'DetailRoom',
+          component: DetailRoom,
         },
       ],
     },

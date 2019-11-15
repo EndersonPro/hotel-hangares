@@ -4,7 +4,7 @@
     </div> -->
     <b-col cols="4">
         <b-card
-        title="Card Title"
+        :title="price"
         :img-src="image"
         img-alt="Image"
         img-top
@@ -13,7 +13,12 @@
         <b-card-text>
         {{ descripcion }}
         </b-card-text>
-
+            <b-button variant="info"><router-link :to="{
+                name:'DetailRoom',
+                params:{
+                    idRoom: id
+                }
+            }">Ver Detalle</router-link></b-button>
             <!-- <b-button href="#" variant="primary">Go somewhere</b-button> -->
         </b-card>
     </b-col>
@@ -31,8 +36,8 @@ export default {
             default: "https://www.the-connaught.co.uk/SysSiteAssets/rooms--suites/superior-queen-single-room/superior-queen-room---teaser.jpg?w=500&h=462&scale=both&mode=crop"
             },
         price: {
-            type:Number,
-            default:50
+            type:String,
+            default:'50'
         },
         type:{
             type:String,
