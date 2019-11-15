@@ -21,6 +21,9 @@
 import { shuffleArray } from '@/shared/utils'
 import cTable from './ReserveTable.vue'
 import axios from 'axios'
+import { Action } from "@/store/const/room";
+import { createNamespacedHelpers } from "vuex";
+const roomModule = createNamespacedHelpers("room/");
 
 function getInfo(){
         var reserves=[]
@@ -65,8 +68,8 @@ export default {
   components: {cTable},
   data: () => {
     return {
-      items: getInfo(),
-      itemsArray: getInfo(),
+      items: [],
+      itemsArray: [],
       fields: [
         {key: 'asigned', label: 'Responsable', sortable: true},
         {key: 'client', label: 'Cliente', sortable: true},
@@ -78,16 +81,22 @@ export default {
       ],
     }
   },
+  computed:{
+    ...roomModule.mapState(["reserves"])
+  },
   methods:{
-    updateComponent(){
-      this.$forceUpdate();
-    }
+    ...roomModule.mapActions([Action.LIST_RESERVES])
   },
   watch:{
-
+    reserves(newReserves, oldReserves){
+      // console.log("entro")
+      // console.log(newReserves);
+      this.items = shuffleArray(newReserves);
+      this.itemsArray = shuffleArray(newReserves);
+    }
   },
   mounted(){
-
+    this.LIST_RESERVES();
   }
 }
 </script>

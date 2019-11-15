@@ -5,12 +5,16 @@ export const room = {
   namespaced: true,
   state: {
     rooms: [],
-    bookRoom: []
+    bookRoom: [],
+    reserves:[]
   },
   mutations: {
     [Mutations.SET_ROOMS](state, rooms) {
       state.rooms = rooms;
     //   console.log(state.rooms);
+    },
+    [Mutations.SET_RESERVES](state, reserves) {
+      state.reserves = reserves;
     },
     [Mutations.SET_BOOKROOM](state, room){
       state.bookRoom.push(room);
@@ -58,6 +62,42 @@ export const room = {
       },
       [Action.CLEAR_BOOKROOM]({ commit }){
         commit(Mutations.DELETE_BOOKROOM);
+      },
+      async [Action.LIST_RESERVES]({ commit, dispatch }){
+        var reserves=[]
+        await axios.get('http://localhost:8000/api/v1.0/reserves/').then(response => {
+        let { status, data } = response;
+        switch (status) {
+        case 200:
+            data.forEach(element => {
+                var roomsReserved = ""
+                element.habitaciones.forEach(e => {
+                    roomsReserved+=e.numero+" ";
+                });
+                var status;
+                if (element.activo){
+                  status="Activo";
+                }else{
+                  status="Inactivo";
+                }
+                reserves.push({
+                    asigned: element.responsable.first_name +" "+element.responsable.last_name,
+                    ccUser: element.usuario.cedula, 
+                    client: element.usuario.first_name +" "+element.usuario.last_name, 
+                    checkIn: element.fechaInicio, 
+                    checkOut: element.fechaFin, 
+                    rooms: roomsReserved, 
+                    status: status,
+                    actions:element.id,
+                    roomsObject: element.habitaciones
+                    });
+            });
+            commit(Mutations.SET_RESERVES, reserves);
+            break;
+        default:
+            console.log('Ocurrio un error al cargar las reservas');
+        }
+    }).catch(err => console.error);
       }
   }
 };

@@ -1,6 +1,6 @@
 <template>
 <div>
-  <h1>{{title}}</h1>
+  <h1 class="title">{{title}}</h1>
     <b-container>
       <b-card no-body :no-block="true">
           <div slot="header">
@@ -46,7 +46,7 @@
                           </div>
                         </b-col>
                         <b-col colmd="2">
-                          <input type="submit" name="submit" id="submit" value="Search" class="btn btn-primary btn-block">
+                          <input type="submit" name="submit" id="submit" value="Buscar" class="btn btn-primary btn-block">
                         </b-col>
                       </b-row>
                     </b-form>
@@ -65,7 +65,6 @@
                 </multiselect>
               </b-col>
             </b-row>
-            
             </b-card-body>
         </b-card>
         <b-card no-body :no-block="true">
@@ -216,7 +215,7 @@ export default {
     }
   },
   methods:{
-    ...roomModule.mapActions([Action.FILTER_RESERVED,Action.FILTER_DATE]),
+    ...roomModule.mapActions([Action.FILTER_RESERVED,Action.FILTER_DATE, Action.LIST_RESERVES]),
     showRooms() {
           this.dataRooms=[];
           this.roomSelected = [];
@@ -253,7 +252,6 @@ export default {
           let { status, data } = response;
           switch (status) {
             case 200:
-              console.log(this.$store.state.user.user)
               this.nombre = data[0].first_name;
               this.apellido = data[0].last_name;
               this.email = data[0].email;
@@ -384,15 +382,15 @@ export default {
         switch (status) {
           case 200:
             console.log("edit");
-            deletedRooms.forEach(element => {
+            deletedRooms.forEach(async element => {
                 var idAssigned = this.assignedRooms.find(e=>e.reserva==data.id && e.habitacion == element.id).id;
-                  axios
+                 await axios
                   .delete("http://localhost:8000/api/v1.0/reservedrooms/"+idAssigned+"/",opts).then(response => {
 
                       let { status, data } = response;
                       switch (status) {
                         case 204:
-
+                            // this.LIST_RESERVES();
                           break;
                         default:
                           console.log("Ocurrio un error, en la asignacion");
@@ -400,20 +398,20 @@ export default {
                     })
                     .catch(err => console.error);                  
               });
-              addedRooms.forEach(element => {
+              addedRooms.forEach(async element => {
                     let room = {
                       reserva: data.id,
                       habitacion: element.id,
                       precioVenta: element.precio,
                     }
-                     axios
+                    await axios
                         .post(
                           "http://localhost:8000/api/v1.0/reservedrooms/", room,opts).then(response => {
 
                           let { status, data } = response;
                           switch (status) {
                             case 201:
-
+                                // this.LIST_RESERVES();
                               break;
                             default:
                               console.log("Ocurrio un error, en la asignacion");
@@ -421,14 +419,14 @@ export default {
                         })
                         .catch(err => console.error);                  
                 });
-              
+                
               this.$swal({
                 title: "Reserva Actualizada",
                 text: "La informacion de la reserva fue actualizada con exito",
                 icon: "success",
                 })
                 .then((data) => {
-                    this.$router.push("/recepcion");
+                    this.LIST_RESERVES();
                 });	
                 
             break;
@@ -436,7 +434,8 @@ export default {
             console.log("Ocurrio un error, en la cancelacion");
         }
       })
-      .catch(err => console.error); 
+      .catch(err => console.error);
+      
     }
   },
   mounted(){
@@ -457,6 +456,9 @@ export default {
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
 <style lang= "scss" scoped>
+.title{
+  margin-left: 15px;
+}
 #submit{
   margin-top: 29px;
 }
