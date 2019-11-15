@@ -17,7 +17,7 @@
 
             <!-- <b-nav-item href="#" disabled>Disabled</b-nav-item> -->
 
-            <b-nav-item-dropdown v-if="getBookRoom.length > 0">
+            <b-nav-item-dropdown  v-b-tooltip.hover title="Tienes Habitaciones" v-if="getBookRoom.length > 0">
               <template v-slot:button-content>
                   <i class="fa fa-heart"></i>
                   <b-badge pill variant="primary">{{getBookRoom.length }}</b-badge>
@@ -27,7 +27,7 @@
                 v-for="(room, index) in getBookRoom" 
                 :key="index">{{ room.tipoHabitacion }} <b-badge variant="primary" pill>{{ room.precio }}</b-badge></b-list-group-item>
               </b-list-group>
-              <b-dropdown-item href="#">Confirmar Reserva</b-dropdown-item>
+              <b-dropdown-item> <router-link to="/confirmar-reserva">Confirmar Reserva</router-link> </b-dropdown-item>
               <b-dropdown-item @click="EmptyListRoom" href="#">Vaciar Book Room</b-dropdown-item>
             </b-nav-item-dropdown>
 
