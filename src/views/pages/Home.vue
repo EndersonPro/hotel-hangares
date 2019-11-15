@@ -55,9 +55,7 @@
       </b-row>
     </b-container>
   </div>
-
-
-  <Reserves></Reserves> -->
+  <!-- <Reserves></Reserves>  -->
   <Services></Services>
   <Testimonials></Testimonials>
 </div>

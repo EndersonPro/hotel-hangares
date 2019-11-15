@@ -1,6 +1,6 @@
 <template>
 	<div id="colorlib-reservation">
-		<b-container>
+		<b-container class="bg-light custom-border">
 				<b-row> 
 					<b-col colmd="12" class="search-wrap">
 					  <b-form @submit.prevent="handlerSubmit" class="colorlib-form">
@@ -120,15 +120,15 @@ export default {
 
     },
     mounted(){
-        let roomParams = {
-            reservada: null,
-            tipoHabitacion: null
-        }
-        try {
-          this.FILTER_RESERVED({roomParams});
-        } catch (error) {
-          console.log(error);
-        }
+        // let roomParams = {
+        //     reservada: null,
+        //     tipoHabitacion: null
+        // }
+        // try {
+        //   this.FILTER_RESERVED({roomParams});
+        // } catch (error) {
+        //   console.log(error);
+        // }
     }
 }
 </script>
@@ -140,9 +140,12 @@ export default {
   }
   padding-right: .2em;
 }
-#colorlib-reservation {
-	background: #ffffff;
+.custom-border{
   border-radius: 5px !important;
+}
+#colorlib-reservation {
+  border-radius: 5px !important;
+	background: #ffffff !important;
   clear: both; }
   #colorlib-reservation .search-wrap {
     width: 100%;
