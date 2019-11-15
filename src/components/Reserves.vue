@@ -21,52 +21,17 @@
 import { shuffleArray } from '@/shared/utils'
 import cTable from './ReserveTable.vue'
 import axios from 'axios'
-
-function getInfo(){
-        var reserves=[]
-        axios.get('http://localhost:8000/api/v1.0/reserves/').then(response => {
-        let { status, data } = response;
-        switch (status) {
-        case 200:
-            data.forEach(element => {
-                var roomsReserved = ""
-                element.habitaciones.forEach(e => {
-                    roomsReserved+=e.numero+" ";
-                });
-                var status;
-                if (element.activo){
-                  status="Activo";
-                }else{
-                  status="Inactivo";
-                }
-                reserves.push({
-                    asigned: element.responsable.first_name +" "+element.responsable.last_name,
-                    ccUser: element.usuario.cedula, 
-                    client: element.usuario.first_name +" "+element.usuario.last_name, 
-                    checkIn: element.fechaInicio, 
-                    checkOut: element.fechaFin, 
-                    rooms: roomsReserved, 
-                    status: status,
-                    actions:element.id,
-                    roomsObject: element.habitaciones
-                    });
-            });
-            break;
-        default:
-            console.log('Ocurrio un error al cargar las reservas');
-        }
-    }).catch(err => console.error);
-
-    return shuffleArray(reserves)
-}
+import { Action } from "@/store/const/room";
+import { createNamespacedHelpers } from "vuex";
+const roomModule = createNamespacedHelpers("room/");
 
 export default {
   name: 'Reserves',
   components: {cTable},
   data: () => {
     return {
-      items: getInfo(),
-      itemsArray: getInfo(),
+      items: [],
+      itemsArray: [],
       fields: [
         {key: 'asigned', label: 'Responsable', sortable: true},
         {key: 'client', label: 'Cliente', sortable: true},
@@ -78,16 +43,20 @@ export default {
       ],
     }
   },
+  computed:{
+    ...roomModule.mapState(["reserves"])
+  },
   methods:{
-    updateComponent(){
-      this.$forceUpdate();
-    }
+    ...roomModule.mapActions([Action.LIST_RESERVES])
   },
   watch:{
-
+    reserves(newReserves, oldReserves){
+      this.items = shuffleArray(newReserves);
+      this.itemsArray = shuffleArray(newReserves);
+    }
   },
   mounted(){
-
+    this.LIST_RESERVES();
   }
 }
 </script>

@@ -6,6 +6,7 @@ export const room = {
   state: {
     rooms: [],
     bookRoom: [],
+    reserves: []
   },
   getters: {
     getRooms: state => state.rooms,
@@ -13,6 +14,9 @@ export const room = {
   mutations: {
     [Mutations.SET_ROOMS](state, rooms) {
       state.rooms = rooms;
+    },
+    [Mutations.SET_RESERVES](state, reserves) {
+      state.reserves = reserves;
     },
     [Mutations.SET_BOOKROOM](state, room) {
       state.bookRoom.push(room);
@@ -22,7 +26,7 @@ export const room = {
     },
     [Mutations.resetRoomList](state) {
       state.rooms = [];
-    },
+    }
   },
   actions: {
     async [Action.FILTER_DATE]({ commit }, { reserveParams }) {
@@ -70,6 +74,42 @@ export const room = {
           }
         })
         .catch(err => console.error);
+    },
+    async [Action.LIST_RESERVES]({ commit, dispatch }){
+      var reserves=[]
+      await axios.get('http://localhost:8000/api/v1.0/reserves/').then(response => {
+      let { status, data } = response;
+      switch (status) {
+      case 200:
+          data.forEach(element => {
+              var roomsReserved = ""
+              element.habitaciones.forEach(e => {
+                  roomsReserved+=e.numero+", ";
+              });
+              var status;
+              if (element.activo){
+                status="Activo";
+              }else{
+                status="Inactivo";
+              }
+              reserves.push({
+                  asigned: element.responsable.first_name +" "+element.responsable.last_name,
+                  ccUser: element.usuario.cedula, 
+                  client: element.usuario.first_name +" "+element.usuario.last_name, 
+                  checkIn: element.fechaInicio, 
+                  checkOut: element.fechaFin, 
+                  rooms: roomsReserved, 
+                  status: status,
+                  actions:element.id,
+                  roomsObject: element.habitaciones
+                  });
+          });
+          commit(Mutations.SET_RESERVES, reserves);
+          break;
+          default:
+              console.log('Ocurrio un error al cargar las reservas');
+          }
+      }).catch(err => console.error);
     },
     [Action.ADD_BOOKROOM]({ commit }, { room }) {
       commit(Mutations.SET_BOOKROOM, room);

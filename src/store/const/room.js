@@ -4,6 +4,7 @@ export const Action = {
   ADD_BOOKROOM: 'ADD_BOOKROOM',
   CLEAR_BOOKROOM: 'CLEAR_BOOKROOM',
   RESET_ROOM_LIST: 'RESET_ROOM_LIST',
+  LIST_RESERVES:'LIST_RESERVES'
 };
 
 export const Mutations = {
@@ -11,4 +12,5 @@ export const Mutations = {
   SET_BOOKROOM: 'setBookRoom',
   DELETE_BOOKROOM: 'deleteBookRoom',
   resetRoomList: 'resetRoomList',
+  SET_RESERVES: 'setReserves'
 };

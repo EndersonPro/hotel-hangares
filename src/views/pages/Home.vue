@@ -40,7 +40,7 @@
 
   <SearchBar></SearchBar>
 <Services></Services> -->
-
+<SearchBar></SearchBar>
  <div id="colorlib-rooms" class="colorlib-light-grey">
     <b-container>
   			<b-row>
