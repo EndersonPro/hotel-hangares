@@ -6,7 +6,7 @@
         <img class="navbar-brand-minimized" src="img/brand/sygnet.svg" width="30" height="30" alt="CoreUI Logo"> -->
         
         <!-- <img class="navbar-brand-minimized" src="assets/images/logo.png" width="30" height="30" alt="CoreUI Logo"> -->
-        <h4 class="navbar-brand-full">HH</h4>
+        <h4 class="navbar-brand-full"><router-link to="/">HH</router-link></h4>
 
 
       </b-link>

@@ -29,13 +29,13 @@
               <b-dropdown-item href="#">Vaciar Book Room</b-dropdown-item>
             </b-nav-item-dropdown>
 
-            <b-nav-item-dropdown right v-if="getUser.user != null">
+            <b-nav-item-dropdown right v-if="getToken">
               <!-- Using 'button-content' slot -->
               <template v-slot:button-content>
-                <em>User</em>
+                <em>{{getUser.username}}</em>
               </template>
-              <b-dropdown-item href="#">{{ $t('nav.profile') }}</b-dropdown-item>
-              <b-dropdown-item href="#">{{ $t('nav.exit') }}</b-dropdown-item>
+              <!-- <b-dropdown-item href="#">{{ $t('nav.profile') }}</b-dropdown-item> -->
+              <b-dropdown-item @click="logout" href="#">{{ $t('nav.exit') }}</b-dropdown-item>
             </b-nav-item-dropdown>
 
             <b-nav-item href="#" v-else >
@@ -66,6 +66,7 @@
 <script>
 import { UIAction } from "@/store/const/ui";
 import { Action } from "@/store/const/room";
+import { Action as UserAction } from "@/store/const/user";
 import { createNamespacedHelpers } from "vuex";
 
 const UIModule = createNamespacedHelpers("ui/");
@@ -84,7 +85,7 @@ export default {
   computed: {
     ...UIModule.mapGetters(["getLanguage"]),
     ...roomModule.mapState(["bookRoom"]),
-    ...userModule.mapGetters(["getUser"]),
+    ...userModule.mapGetters(["getUser","getToken"]),
     isViewLogin: function() {
       return this.$router.history.current.fullPath == "/login";
     },
@@ -98,7 +99,12 @@ export default {
       this.$i18n.locale = lang.toLowerCase();
       this[UIAction.CHANGE_LANGUAGE](lang.toLowerCase());
     },
-    ...UIModule.mapActions([UIAction.CHANGE_LANGUAGE])
+    ...UIModule.mapActions([UIAction.CHANGE_LANGUAGE]),
+    ...userModule.mapActions([UserAction.USER_LOGOUT]),
+    async logout(){
+      await this.USER_LOGOUT();
+      this.$router.push("/");
+    }
   },
   watch: {
     bookRoom(newBookRoom, oldBookRoom) {
