@@ -12,7 +12,7 @@
         <b-button v-b-modal.modal-edit-reserve size="sm" variant="primary" @click="editReserve(data.item)" class="btn mr-2">
           <i class="fa fa-pencil"></i>
         </b-button>
-        <b-button size="sm" variant="danger" @click="deleteRow(data.item)" class="mr-2">
+        <b-button size="sm" variant="danger" @click="cancelReserve(data.item)" class="mr-2">
           <i class="fa fa-trash"></i>
         </b-button>
       </template>
@@ -134,7 +134,6 @@
       id="modal-edit-reserve"
       ref="modal"
       title=""
-      @hidden="updateComponent"
       hide-footer
     >
       <EditReserve :title="'Editar Reserva'" :edit="true" :reserveObject="currentRow"></EditReserve>
@@ -226,8 +225,8 @@ export default {
     getBadge (status) {
       return status === 'Activo' ? 'success'
         : status === 'Inactivo' ? 'danger'
-          : status === 'Pending' ? 'warning'
-            : status === 'Banned' ? 'danger' : 'primary'
+          : status === 'Pendiente' ? 'warning'
+            : status === 'Cancelado' ? 'danger' : 'primary'
     },
     getRowCount: function () {
       return this.items.length
@@ -235,7 +234,7 @@ export default {
     rowClicked (item) {
       this.$emit('row-clicked', item)
     },
-    async deleteRow(row){
+    cancelReserve(row){
       
       let token = this.$store.state.user.token;
       let opts = {
@@ -244,38 +243,55 @@ export default {
             "Authorization": `Bearer ${token}`
           }
       };
-      await axios.patch("http://localhost:8000/api/v1.0/reserves/"+row.actions+"/",
-      {
-        "activo":0
-      },opts).then(response => {
+      this.$swal({
+				title: "¿Estás seguro?",
+				text: "La reserva sera cancelada y no podras recuperarla",
+				icon: "warning",
+				buttons: true,
+				dangerMode: true,
+			  })
+			  .then((willDelete) => {
+				if (willDelete) {
+					try { 
+              axios.patch("http://localhost:8000/api/v1.0/reserves/"+row.actions+"/",
+              {
+                "activo":0
+              },opts).then(response => {
 
-        let { status, data } = response;
-        
-        switch (status) {
-          case 200:
-              row.status="Inactivo";
-              row.roomsObject.forEach(e => {
-                  axios.patch("http://localhost:8000/api/v1.0/rooms/"+e.id+"/",
-                  {
-                    "reservada":0
-                  },opts).then(response => {
-                    let { status, data } = response;
-                    switch (status) {
-                      case 200:
-                        
-                        break;
-                      default:
-                        console.log("Ocurrio un error, en la cancelacion");
-                    }
-                  })
-                  .catch(err => console.error); 
-              });
-            break;
-          default:
-            console.log("Ocurrio un error, en la cancelacion");
-        }
-      })
-      .catch(err => console.error);     
+                let { status, data } = response;
+                
+                switch (status) {
+                  case 200:
+                      row.status="Inactivo";
+                      row.roomsObject.forEach(e => {
+                          axios.patch("http://localhost:8000/api/v1.0/rooms/"+e.id+"/",
+                          {
+                            "reservada":0
+                          },opts).then(response => {
+                            let { status, data } = response;
+                            switch (status) {
+                              case 200:
+                                
+                                break;
+                              default:
+                                console.log("Ocurrio un error, en la cancelacion");
+                            }
+                          })
+                          .catch(err => console.error); 
+                      });
+                    break;
+                  default:
+                    console.log("Ocurrio un error, en la cancelacion");
+                }
+              })
+              .catch(err => console.error);   
+            
+					} catch (err) {
+						console.log(err);
+					}
+				}
+			});	
+  
     },
 
     resetModal() {
@@ -340,7 +356,7 @@ export default {
                     let { status, data } = response;
                     switch (status) {
                         case 201:
-                            this.deleteRow(this.currentRow);
+                            // this.cancelReserve(this.currentRow);
                             swal("Guardado","La reserva ha sido cobrada","success");    
                           break;
                         default:
@@ -359,9 +375,6 @@ export default {
     },
     editReserve(row){
       this.currentRow = row;
-    },
-    updateComponent(){
-      // this.$router.push("/recepcion/lista-reservas");
     }
   }
 }
