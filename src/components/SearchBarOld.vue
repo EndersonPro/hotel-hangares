@@ -2,7 +2,7 @@
 	<div id="colorlib-reservation" style="transition: .5s all ease-in-out;">
 		<b-container class="bg-light custom-border">
 				<b-row> 
-					<b-col cols="10" md="12" class="search-wrap">
+					<b-col cols="10" md="12" class="p-3 search-wrap">
 					  <b-form @submit.prevent="handlerSubmit" class="colorlib-form">
 		            <b-row>
                   <b-col  class="d-flex justify-content-center">
@@ -148,14 +148,12 @@ export default {
 	background: #ffffff !important;
   clear: both; }
   #colorlib-reservation .search-wrap {
-    width: 100%;
-    display: block;
-    // margin-top: -6.66em;
+    // width: 100%;
+    // display: block;
     z-index: 9;
-    // background: white;
-    padding: 1em; 
-    color:black;
-    }
+    // padding: .2em; 
+    // color:black;
+  }
 .colorlib-form label {
   font-weight: normal;
   color: black; 
@@ -173,28 +171,10 @@ export default {
     -webkit-box-shadow: none;
     box-shadow: none;
     border-color: #4586FF; }
-  .colorlib-form .form-control::-webkit-input-placeholder {
-    /* Chrome/Opera/Safari */
-    color: rgba(255, 255, 255, 0.7); }
-  .colorlib-form .form-control::-moz-placeholder {
-    /* Firefox 19+ */
-    color: rgba(255, 255, 255, 0.7); }
-  .colorlib-form .form-control:-ms-input-placeholder {
-    /* IE 10+ */
-    color: rgba(255, 255, 255, 0.7); }
-  .colorlib-form .form-control:-moz-placeholder {
-    /* Firefox 18- */
-    color: rgba(255, 255, 255, 0.7); }
 
-  // .colorlib-form .form-group .form-field {
-  //   position: relative;
-  //   padding: 0;
-  //   margin: 0; }
-  //   // .
-
-.colorlib-form textarea.form-control {
-  height: inherit;
-  resize: vertical; }
+// .colorlib-form textarea.form-control {
+//   height: inherit;
+//   resize: vertical; }
 
 .colorlib-form .btn-block {
   padding: 12px !important; }

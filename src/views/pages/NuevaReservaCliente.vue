@@ -1,7 +1,7 @@
 <template>
     <div class="bg-reservas">
         <b-container>
-            <b-row class="d-flex flex-row align-content-center justify-content-center">
+            <b-row class="d-flex flex-row align-content-center">
                 <b-col sm="12">
                     <SearchBarOld></SearchBarOld>
                 </b-col>
