@@ -8,7 +8,7 @@
         :img-src="image"
         img-alt="Image"
         img-top
-        style="width: 18rem;max-width: 18rem;"
+        style="width: 12rem;max-width: 12rem;"
     >
     <b-card-text>
     {{ descripcion }}

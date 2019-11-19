@@ -8,8 +8,16 @@
     </b-container>
 </template>
 <script>
+import { Action as RoomAction } from '@/store/const/room';
+import { createNamespacedHelpers } from 'vuex';
+
+const RoomModule = createNamespacedHelpers('room/');
+
 export default {
-    name:"ConfirmReservePage"
+    name:"ConfirmReservePage",
+    computed:{
+        ...RoomModule.mapGetters(["getRooms","getBookRoom"])
+    }
 }
 </script>
 
