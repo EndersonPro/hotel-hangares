@@ -88,7 +88,7 @@ function configRoutes() {
           component: NewReserveClient,
         },
         {
-          path: '/detalle-habitacion',
+          path: '/detalle-habitacion/:id',
           name: 'DetailRoom',
           component: DetailRoom,
         },

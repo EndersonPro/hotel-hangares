@@ -2,13 +2,13 @@
     <!-- <div cols="4" class="card" :style="{ backgroundImage: 'url('+image+')' }">
         {{ descripcion }}
     </div> -->
-    <b-col cols="4">
+    <!-- <b-col cols="4"> -->
         <b-card
         :title="price"
         :img-src="image"
         img-alt="Image"
         img-top
-        style="width: 12rem;max-width: 12rem;"
+        style="width: 12rem;max-width: 12rem; transition: .5s all ease-in-out;"
     >
     <b-card-text>
     {{ descripcion }}
@@ -16,16 +16,11 @@
     <div class="d-flex justify-content-between align-items-center flex-row">
         <b-button variant="outline-danger" id="fav" @click="addRoom" class="btn-book"><i class="fa fa-heart" ></i></b-button>
         <b-tooltip target="fav" title="Añadir a Favoritos"></b-tooltip>    
-        <router-link class="btn btn-primary" :to="{
-            name:'DetailRoom',
-            params:{
-                idRoom: id
-            }
-        }">Ver Detalle</router-link>
+        <router-link class="btn btn-primary" :to="'/detalle-habitacion/'+ id">Ver Detalle</router-link>
     </div>
             <!-- <b-button href="#" variant="primary">Go somewhere</b-button> -->
         </b-card>
-    </b-col>
+    <!-- </b-col> -->
 </template>
 
 <script>
@@ -38,7 +33,8 @@ export default {
     name:"RoomCardNew",
     props: {
         id:{
-            type:Number
+            type:Number,
+            required: true
         },
         image:{
             type: String,
@@ -46,22 +42,24 @@ export default {
             },
         price: {
             type:String,
-            default:'50'
+            required: true
         },
         type:{
             type:String,
-            default:"FAMILY ROOM"
+            required: true
         },
         number:{
             type:Number,
-            default: 201
+            required: true
         },
         reserved:{
             type: Boolean,
-            default: false
+            // default: false,
+            required: true
         },
         descripcion:{
             type:String,
+            required: true
         }
     },
     methods:{

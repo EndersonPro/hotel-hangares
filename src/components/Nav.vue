@@ -85,7 +85,6 @@ export default {
   data() {
     return {
       languages: ["ES", "US", "RU", "FR"],
-      roomsAdded: this.$store.state.room.bookRoom.length,
       router: this.$router,
       scrollY: false
     };

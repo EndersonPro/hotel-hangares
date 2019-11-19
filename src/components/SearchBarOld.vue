@@ -1,11 +1,11 @@
 <template>
-	<div id="colorlib-reservation">
+	<div id="colorlib-reservation" style="transition: .5s all ease-in-out;">
 		<b-container class="bg-light custom-border">
 				<b-row> 
-					<b-col colmd="12" class="search-wrap">
+					<b-col cols="10" md="12" class="search-wrap">
 					  <b-form @submit.prevent="handlerSubmit" class="colorlib-form">
 		            <b-row>
-                  <b-col colmd="2" class="d-flex justify-content-center">
+                  <b-col  class="d-flex justify-content-center">
                       <div>
                           <i class="fa fa-dollar text-primary"></i>
                         </div>
@@ -16,46 +16,46 @@
 		                      <b-form-select  v-model="order" :options="optionsOrder" class="form-control"></b-form-select>
 		                    </div>
 		                  </b-form-group>
-		                </b-col>
-		                <b-col colmd="2" class="d-flex justify-content-center">
+		              </b-col>
+                  <b-col  class="d-flex justify-content-center">
+                    <div>
+                        <i class="fa fa-home text-primary"></i>
+                      </div>
+                    <div class="form-group">
+                      <label for="children">Tipo Habitación</label>
+                      <div class="form-field">
+                        <i class="icon icon-arrow-down3"></i>
+                        <b-form-select v-model="typeRoom" :options="optionsType" class="form-control"></b-form-select>
+                      </div>
+                    </div>
+                  </b-col>
+                  <b-col class="d-flex justify-content-center">
                       <div>
-                          <i class="fa fa-home text-primary"></i>
-                        </div>
-		                  <div class="form-group">
-		                    <label for="children">Tipo Habitación</label>
-		                    <div class="form-field">
-		                      <i class="icon icon-arrow-down3"></i>
-		                      <b-form-select v-model="typeRoom" :options="optionsType" class="form-control"></b-form-select>
-		                    </div>
-		                  </div>
-		                </b-col>
-		                <b-col colmd="3" class="d-flex justify-content-center">
-                        <div>
-                          <i class="fa fa-calendar text-primary"></i>
-                        </div>
-		                  <b-form-group class="">
-                        <div>
-                          <label for="date">Fecha de entrada</label>
-                          <div class="form-field">
-                            <b-form-input v-model="checkIn" type="date"></b-form-input>
-                          </div>
-                        </div>
-		                  </b-form-group>
-		                </b-col>
-		                <b-col colmd="3" class="d-flex justify-content-center">
+                        <i class="fa fa-calendar text-primary"></i>
+                      </div>
+                    <b-form-group class="">
                       <div>
-                          <i class="fa fa-calendar text-primary"></i>
+                        <label for="date">Fecha de entrada</label>
+                        <div class="form-field">
+                          <b-form-input v-model="checkIn" type="date"></b-form-input>
                         </div>
-		                  <div class="form-group">
-		                    <label for="date">Fecha de salida</label>
-		                    <div class="form-field">
-                          <b-form-input v-model="checkOut" type="date"></b-form-input>
-		                    </div>
-		                  </div>
-		                </b-col>
-		                <b-col colmd="2" class="d-flex justify-content-center align-items-center">
-		                  <input type="submit" name="submit" id="submit" value="Buscar" class="btn btn-primary btn-block">
-		                </b-col>
+                      </div>
+                    </b-form-group>
+                  </b-col>
+                  <b-col class="d-flex justify-content-center">
+                    <div>
+                        <i class="fa fa-calendar text-primary"></i>
+                      </div>
+                    <div class="form-group">
+                      <label for="date">Fecha de salida</label>
+                      <div class="form-field">
+                        <b-form-input v-model="checkOut" type="date"></b-form-input>
+                      </div>
+                    </div>
+                  </b-col>
+                  <b-col cols="2" md="2" class="d-flex justify-content-center align-items-center">
+                    <input type="submit" name="submit" id="submit" value="Buscar" class="btn btn-primary btn-block">
+                  </b-col>
 		              </b-row>
 		            </b-form>
 					</b-col>
@@ -74,7 +74,7 @@ export default {
         return{
           checkIn:"",
           checkOut:"",
-          reserved: 1,
+          reserved: 0,
           typeRoom: null,
           order:null,
           optionsOrder:[
@@ -186,24 +186,11 @@ export default {
     /* Firefox 18- */
     color: rgba(255, 255, 255, 0.7); }
 
-.colorlib-form .form-group {
-  margin-bottom: 10px; }
-  .colorlib-form .form-group .form-field {
-    position: relative;
-    padding: 0;
-    margin: 0; }
-    .colorlib-form .form-group .form-field .icon {
-      position: absolute;
-      top: 50%;
-      -webkit-transform: translateY(-50%);
-      -moz-transform: translateY(-50%);
-      -ms-transform: translateY(-50%);
-      -o-transform: translateY(-50%);
-      transform: translateY(-50%);
-      right: 20px;
-      color: rgba(255, 255, 255, 0.5); }
-    .colorlib-form .form-group .form-field .form-control {
-      padding-right: 20px; }
+  // .colorlib-form .form-group .form-field {
+  //   position: relative;
+  //   padding: 0;
+  //   margin: 0; }
+  //   // .
 
 .colorlib-form textarea.form-control {
   height: inherit;

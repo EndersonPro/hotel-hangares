@@ -22,14 +22,10 @@
                 </b-carousel>
             </b-col>
             <b-col cols="8" md="8"  class="bg-light content pt-3 pb-3 pl-4 pr-4 d-flex flex-column justify-content-between">
-
-                    <h4 class="text-center"> Tipo de Habitacion </h4>
-                    
-
-                    <p class="des-crip-tion">Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit distinctio magni, corporis eos maiores consectetur dolorum consequatur soluta ad quia culpa veniam dolores, quaerat laudantium? Porro eligendi in facere dolorum 
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Deserunt officiis distinctio assumenda nisi esse tempore amet harum. Non id autem ipsum esse soluta quae maxime, blanditiis unde dolorum dolore harum?
+                    <h4 class="text-center"> {{ room.tipoHabitacion.descripcion }} </h4>
+                    <p class="des-crip-tion">
+                        {{ room.descripcion }}
                     </p>
-
                 <b-list-group>
                     <b-list-group-item class="d-flex justify-content-between align-items-center">
                         Cras justo odio
@@ -49,10 +45,7 @@
 
                 <div class="d-flex flex-row justify-content-between">
                     <div>Stars</div>
-                    <router-link class="btn btn-primary" to="/confirmar-reserva">
-                    
-                     Reservar 
-                    </router-link>
+                    <b-button variant="info" @click="addRoom">Reservar</b-button>
                 </div>
             </b-col>
         </b-row>
@@ -60,11 +53,56 @@
 </template>
 
 <script>
+
+import { createNamespacedHelpers } from "vuex";
+import { Action } from "@/store/const/room";
+const roomModule = createNamespacedHelpers("room/");
+
 export default {
     name:"RoomDetail",
-    props:{
-        rooms: [Object]
-    }
+    computed:{
+        ...roomModule.mapGetters(["getRooms"]),
+        room: function(){
+            try {
+                // TODO: Estoy filtrando solo el elemento que deseo del store y accedo a el mediante el indice
+                // [0]
+                let room = this.getRooms.filter(room => room.id == this.$route.params.id)[0];
+                // throw new Error("Ocurrio un error");
+                return room
+            } catch (error) {
+                console.log(error);
+                this.$router.go(-1);
+            }
+        }
+    },
+    created(){
+        console.log(this.room)
+    },
+    methods: {
+        ...roomModule.mapActions([Action.ADD_BOOKROOM]),
+        addRoom(){
+            console.log("Entrando en addRoom")
+            let room = {
+                id: this.room.id,
+                numero: this.room.number,
+                precio: this.room.price,
+                tipoHabitacion: this.room.type,
+                reservada: this.room.reserved,
+                descripcion: this.room.descripcion
+            }
+            if (!this.reserved){
+                try {
+                    this.ADD_BOOKROOM({room});
+                    this.$router.push({path:'/confirmar-reserva'});
+                } catch (error) {
+                    
+                }
+
+            }else{
+                this.$swal('Habitacion Reservada','No puede agregar al Book Room esta habitacion',"error");
+            }
+        }
+    },
 }
 </script>
 

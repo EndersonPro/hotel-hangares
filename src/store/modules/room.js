@@ -74,7 +74,7 @@ export const room = {
               console.log('Ocurrio un error al cargar las habitaciones');
           }
         })
-        .catch(err => console.error);
+        .catch(err => console.error(err));
     },
     async [Action.LIST_RESERVES]({ commit, dispatch }) {
       var reserves = [];

@@ -5,16 +5,17 @@
                 <b-col sm="12">
                     <SearchBarOld></SearchBarOld>
                 </b-col>
-                <b-row v-if="getRooms != []">
-                    <RoomCardNew class="mt-2" v-for="room in getRooms"
-                        :id="room.id"
-                        :key="room.id"
-                        :price="room.precio"
-                        :type="room.type"
-                        :number="room.number"
-                        :reserved="room.reserved"
-                        :descripcion="room.descripcion"
+                <b-row class="mt-2" v-if="getRooms != []">
+                    <b-col :key="room.id" v-for="room in getRooms" >
+                        <RoomCardNew
+                            :id="room.id"
+                            :price="room.precio"
+                            :type="room.tipoHabitacion.nombre"
+                            :number="room.numero"
+                            :reserved="room.reservada"
+                            :descripcion="room.descripcion"
                         ></RoomCardNew>
+                    </b-col>
                 </b-row>
             </b-row>
         </b-container>
