@@ -66,6 +66,8 @@
 <script>
 import { Action } from "@/store/const/room";
 import { createNamespacedHelpers } from "vuex";
+import * as moment from 'moment'
+
 const roomModule = createNamespacedHelpers("room/");
 
 export default {
@@ -99,10 +101,10 @@ export default {
             tipoHabitacion: this.typeRoom
           }
           let reserveParams ={
-            fechaInicio: this.checkIn,
-            fechaFin: this.checkOut
+            fechaInicio: moment(this.checkIn).format("YYYY-MM-DD"),
+            fechaFin: moment(this.checkOut).format("YYYY-MM-DD")
           }
-          console.log(this.checkIn);
+          console.log(reserveParams);
 
           var reserved = 0;
           try {

@@ -57,6 +57,7 @@ export default {
         ...userModule.mapGetters(["getToken","getUser"])
     },
     methods:{
+        ...RoomModule.mapActions(["CLEAR_BOOKROOM"]),
     async saveOne(reserve){
         let token = this.getToken;
         let opts = {
@@ -85,7 +86,7 @@ export default {
                           let { status, data } = response;
                           switch (status) {
                             case 201:
-                                console.log("Todo viendo")
+                                this.CLEAR_BOOKROOM();
                               break;
                             default:
                               console.log("Ocurrio un error, en la asignacion");
