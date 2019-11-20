@@ -340,7 +340,7 @@ export default {
                               console.log("Ocurrio un error, en la asignacion");
                           }
                         })
-                        .catch(err => console.error);                  
+                        .catch(console.error);                  
                   });
                     this.$swal('Reserva creada','La reserva ha sido hecha con exito!',"success");
                   break;

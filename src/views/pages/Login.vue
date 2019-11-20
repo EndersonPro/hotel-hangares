@@ -273,6 +273,8 @@ export default {
   },
   mounted() {
     // this[UIAction.IS_LOADING]();
+    // console.log(this.$route.query.backto)
+
     if (this.$store.state.user.token != null) {
       this.$router.push("/recepcion/dashboard");
     }
@@ -300,7 +302,11 @@ export default {
           if (this.getToken == null) {
             await this.USER_LOGIN({ body });
             this[UIAction.IS_LOADING](false);
-            this.$router.push("/recepcion/dashboard");
+            if(this.$route.query.backto){
+              this.$router.push(this.$route.query.backto);
+            }else{
+              this.$router.push("/recepcion/dashboard");
+            }
           }
         } catch (error) {
           console.error(error);

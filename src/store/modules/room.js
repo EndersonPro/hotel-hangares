@@ -1,5 +1,6 @@
 import { Action, Mutations } from '../const/room';
 import axios from 'axios';
+import _ from 'lodash';
 
 export const room = {
   namespaced: true,
@@ -89,14 +90,17 @@ export const room = {
                 element.habitaciones.forEach(e => {
                   roomsReserved += e.numero + ', ';
                 });
-                roomsReserved = roomsReserved.substring(0,roomsReserved.length-2);
+                roomsReserved = roomsReserved.substring(
+                  0,
+                  roomsReserved.length - 2,
+                );
                 var status;
-                if (element.estado==1) {
+                if (element.estado == 1) {
                   status = 'Pendiente';
-                } else if (element.estado == 2){
+                } else if (element.estado == 2) {
                   status = 'Pagada';
-                }else{
-                  status = 'Cancelada'
+                } else {
+                  status = 'Cancelada';
                 }
                 reserves.push({
                   asigned:
@@ -125,10 +129,7 @@ export const room = {
         .catch(err => console.error);
     },
     [Action.ADD_BOOKROOM]({ commit, state }, { room }) {
-      console.log('NO VEO');
-      console.log(state.bookRoom.includes(room));
-      if (state.bookRoom.includes()) {
-        console.log('VEAMOS');
+      if (_.find(state.bookRoom, { id: room.id })) {
         throw new Error('Elemento repetido en el libro de habitaciones');
       } else {
         commit(Mutations.SET_BOOKROOM, room);
