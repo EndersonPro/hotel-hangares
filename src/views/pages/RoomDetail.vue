@@ -1,56 +1,58 @@
 <template>
-    <div style="height:100vh;" class="d-flex flex-column justify-content-center">
+    <div style="height:90vh; top:10vh; position:absolute" class="d-flex flex-column justify-content-center">
         <b-row>
-            <b-col class="bg-light d-flex flex-row justify-content-between">
+            <div class="bg-light d-flex flex-row">
                 <div style="max-width:35%">
                     <b-carousel
                         id="carousel-fade"
                         fade
                         indicators
                         img-width="1000"
-                        img-height="1500"
+                        img-height="1000"
                         :interval="200000"
                         controls
                         >
                         <b-carousel-slide
-                            img-src="https://picsum.photos/1000/1500/?image=11"
+                            img-src="https://picsum.photos/1000/1000/?image=11"
                         ></b-carousel-slide>
                         <b-carousel-slide
-                            img-src="https://picsum.photos/1000/1500/?image=17"
+                            img-src="https://picsum.photos/1000/1000/?image=17"
                         ></b-carousel-slide>
                         <b-carousel-slide
-                            img-src="https://picsum.photos/1000/1500/?image=20"
+                            img-src="https://picsum.photos/1000/1000/?image=20"
                         ></b-carousel-slide>
                     </b-carousel>
                 </div>
                 <div class="content pt-3 pb-3 pl-4 pr-4 d-flex flex-column justify-content-between">
-                    <h4 class="text-center"> {{ room.tipoHabitacion.descripcion }} </h4>
-                    <p class="des-crip-tion">
-                        {{ room.descripcion }}
-                    </p>
-                <b-list-group>
-                    <b-list-group-item class="d-flex justify-content-between align-items-center">
-                        Cras justo odio
-                        <b-badge variant="primary" pill>14</b-badge>
-                    </b-list-group-item>
+                    <div>
+                        <h4 class="text-center"> {{ room.tipoHabitacion.descripcion }} </h4>
+                        <p class="des-crip-tion">
+                            {{ room.descripcion }}
+                        </p>
+                        <b-list-group>
+                            <b-list-group-item class="d-flex justify-content-between align-items-center">
+                                Cras justo odio
+                                <b-badge variant="primary" pill>14</b-badge>
+                            </b-list-group-item>
 
-                    <b-list-group-item class="d-flex justify-content-between align-items-center">
-                        Dapibus ac facilisis in
-                        <b-badge variant="primary" pill>2</b-badge>
-                    </b-list-group-item>
+                            <b-list-group-item class="d-flex justify-content-between align-items-center">
+                                Dapibus ac facilisis in
+                                <b-badge variant="primary" pill>2</b-badge>
+                            </b-list-group-item>
 
-                    <b-list-group-item class="d-flex justify-content-between align-items-center">
-                        Morbi leo risus
-                        <b-badge variant="primary" pill>1</b-badge>
-                    </b-list-group-item>
-                </b-list-group>
+                            <b-list-group-item class="d-flex justify-content-between align-items-center">
+                                Morbi leo risus
+                                <b-badge variant="primary" pill>1</b-badge>
+                            </b-list-group-item>
+                        </b-list-group>
+                    </div>
 
-                <div class="d-flex flex-row justify-content-between">
-                    <div>Stars</div>
-                    <b-button variant="info" @click="addRoom">Reservar</b-button>
+                    <div class="d-flex flex-row justify-content-between">
+                        <div>Stars</div>
+                        <b-button variant="info" @click="addRoom">Reservar</b-button>
+                    </div>
                 </div>
-                </div>
-            </b-col>
+            </div>
         </b-row>
     </div>
 </template>
@@ -108,7 +110,7 @@ export default {
 
 <style lang="scss" scoped>
 .content{
-
+    width: 100%;
     .des-crip-tion{
         font-size: 16px; 
         text-align: justify

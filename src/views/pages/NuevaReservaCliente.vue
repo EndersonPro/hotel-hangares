@@ -1,11 +1,13 @@
 <template>
+<div>
     <div class="bg-reservas">
+        <div class="container search-bar" sm="12">
+            <SearchBarOld></SearchBarOld>
+        </div>
+    </div>
         <b-container class="d-flex flex-row align-content-center">
             <b-row class="d-flex flex-row align-content-center">
-                <b-col sm="12">
-                    <SearchBarOld></SearchBarOld>
-                </b-col>
-                <b-card-group deck class="mt-2" v-if="getRooms != []">
+                <b-card-group columns class="mt-2" v-if="getRooms != []">
                         <RoomCardNew
                             :key="room.id" v-for="room in getRooms" 
                             :id="room.id"
@@ -14,7 +16,7 @@
                 </b-card-group>
             </b-row>
         </b-container>
-    </div>
+</div>
 </template>
 
 <script>
@@ -50,15 +52,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.search-bar{
+    
+}
 .bg-reservas{
-  background: {
-    image: url('../../assets/images/bg_reservas.png');
-    size: cover;
-    repeat: no-repeat;
-  }
+    height: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: {
+        image: url('../../assets/images/bg_reservas.png');
+        size: cover;
+        repeat: no-repeat;
+    }
 }
 .d-flex{
-    height: 95vh;
+    // height: 95vh;
 }
 </style>

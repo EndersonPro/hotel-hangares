@@ -57,7 +57,7 @@ const Login = () => import('@/views/pages/Login');
 const Register = () => import('@/views/pages/Register');
 const NuevaReserva = () => import('@/views/pages/NuevaReserva');
 const ListReserves = () => import('@/views/pages/ListReserves');
-const Dashboard= () => import('@/views/pages/Dashboard');
+const Dashboard = () => import('@/views/pages/Dashboard');
 const NewReserveClient = () => import('@/views/pages/NuevaReservaCliente');
 const DetailRoom = () => import('@/views/pages/RoomDetail');
 const ConfirmReservePage = () =>

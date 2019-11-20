@@ -113,7 +113,7 @@ export default {
       return this.$router.history.current.fullPath == "/";
     },
     variantForRoute: function(){
-      return this.$router.history.current.name == 'Home' ? null : 'info';
+      return this.$router.history.current.name == 'Home' || this.$router.history.current.name == "NewReserveClient" ? null : 'info';
     },
     isScroll: function(){
       console.log(window.scrollY > 0);
@@ -169,6 +169,7 @@ export default {
     left: 0;
     top: 0;
     width: 100vw;
+    z-index: 99;
   }
 
   .container_nav.vue-fixed-header--isFixed {

@@ -4,7 +4,7 @@
         :img-src="image"
         img-alt="Image"
         img-top
-        style="max-width:25%; transition: .5s all ease-in-out;"
+        style="transition: .5s all ease-in-out;"
         footer-tag="footer"
     >
 
