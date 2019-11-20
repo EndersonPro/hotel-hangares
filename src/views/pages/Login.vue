@@ -274,7 +274,7 @@ export default {
   mounted() {
     // this[UIAction.IS_LOADING]();
     if (this.$store.state.user.token != null) {
-      this.$router.push("/recepcion");
+      this.$router.push("/recepcion/dashboard");
     }
   },
   methods: {
@@ -300,7 +300,7 @@ export default {
           if (this.getToken == null) {
             await this.USER_LOGIN({ body });
             this[UIAction.IS_LOADING](false);
-            this.$router.push("/recepcion");
+            this.$router.push("/recepcion/dashboard");
           }
         } catch (error) {
           console.error(error);

@@ -1,28 +1,28 @@
 export default {
   items: [
-    // {
-    //   name: "Dashboard",
-    //   url: "/dashboard",
-    //   icon: "icon-speedometer",
-    //   badge: {
-    //     variant: "primary",
-    //     text: "NEW"
-    //   }
-    // },
+    {
+      name: "Dashboard",
+      url: "/recepcion/dashboard",
+      icon: "icon-speedometer",
+      // badge: {
+      //   variant: "primary",
+      //   text: "NEW"
+      // }
+    },
     {
       name: "Reservas",
       url: "/",
-      icon: "icon-puzzle",
+      icon: "icon-grid",
       children: [
         {
-          name: "Generar Reserva",
+          name: "Agregar Reserva",
           url: "/recepcion/nueva-reserva",
-          icon: "icon-puzzle"
+          icon: "icon-plus"
         },
         {
           name: "Ver Reservas",
           url: "/recepcion/lista-reservas",
-          icon: "icon-puzzle"
+          icon: "icon-list"
         }
       ]
     }

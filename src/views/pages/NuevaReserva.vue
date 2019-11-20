@@ -306,6 +306,7 @@ export default {
         let reserve = {
           fechaInicio: this.checkIn,
           fechaFin: this.checkOut,
+          estado: 1,
           usuario: this.idCliente,
           responsable: this.idRespUser,
           habitaciones: []

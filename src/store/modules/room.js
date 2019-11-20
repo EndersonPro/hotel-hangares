@@ -89,11 +89,14 @@ export const room = {
                 element.habitaciones.forEach(e => {
                   roomsReserved += e.numero + ', ';
                 });
+                roomsReserved = roomsReserved.substring(0,roomsReserved.length-2);
                 var status;
-                if (element.activo) {
-                  status = 'Activo';
-                } else {
-                  status = 'Inactivo';
+                if (element.estado==1) {
+                  status = 'Pendiente';
+                } else if (element.estado == 2){
+                  status = 'Pagada';
+                }else{
+                  status = 'Cancelada'
                 }
                 reserves.push({
                   asigned:

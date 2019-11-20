@@ -9,10 +9,10 @@
         <b-button v-b-modal.modal-prevent-closing size="sm" @click="generateBill(data.item)" variant="success" class="btn mr-2">
           <i class="fa fa-dollar"></i>
         </b-button>
-        <b-button v-b-modal.modal-edit-reserve size="sm" variant="primary" @click="editReserve(data.item)" class="btn mr-2">
+        <b-button v-if="data.item.status=='Pendiente'" v-b-modal.modal-edit-reserve size="sm" variant="primary" @click="editReserve(data.item)" class="btn mr-2">
           <i class="fa fa-pencil"></i>
         </b-button>
-        <b-button size="sm" variant="danger" @click="cancelReserve(data.item)" class="mr-2">
+        <b-button v-if="data.item.status=='Pendiente'" size="sm" variant="danger" @click="cancelReserve(data.item)" class="mr-2">
           <i class="fa fa-trash"></i>
         </b-button>
       </template>
@@ -122,7 +122,7 @@
             </b-form-group>
           </b-col>
           <b-col colmd="6">
-              <b-button v-if="status=='Activo'" type="submit" variant="success" class="btn mr-2 cobrar">
+              <b-button v-if="status=='Pendiente'" type="submit" variant="success" class="btn mr-2 cobrar">
                  Cobrar <i class="fa fa-dollar"></i>
               </b-button>
             </b-col>
@@ -223,10 +223,9 @@ export default {
   },
   methods: {
     getBadge (status) {
-      return status === 'Activo' ? 'success'
-        : status === 'Inactivo' ? 'danger'
+      return status === 'Pagada' ? 'success'
           : status === 'Pendiente' ? 'warning'
-            : status === 'Cancelado' ? 'danger' : 'primary'
+            : status === 'Cancelada' ? 'danger' : 'primary'
     },
     getRowCount: function () {
       return this.items.length
@@ -236,13 +235,6 @@ export default {
     },
     cancelReserve(row){
       
-      let token = this.$store.state.user.token;
-      let opts = {
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
-          }
-      };
       this.$swal({
 				title: "¿Estás seguro?",
 				text: "La reserva sera cancelada y no podras recuperarla",
@@ -252,46 +244,59 @@ export default {
 			  })
 			  .then((willDelete) => {
 				if (willDelete) {
-					try { 
-              axios.patch("http://localhost:8000/api/v1.0/reserves/"+row.actions+"/",
-              {
-                "activo":0
-              },opts).then(response => {
-
-                let { status, data } = response;
-                
-                switch (status) {
-                  case 200:
-                      row.status="Inactivo";
-                      row.roomsObject.forEach(e => {
-                          axios.patch("http://localhost:8000/api/v1.0/rooms/"+e.id+"/",
-                          {
-                            "reservada":0
-                          },opts).then(response => {
-                            let { status, data } = response;
-                            switch (status) {
-                              case 200:
-                                
-                                break;
-                              default:
-                                console.log("Ocurrio un error, en la cancelacion");
-                            }
-                          })
-                          .catch(err => console.error); 
-                      });
-                    break;
-                  default:
-                    console.log("Ocurrio un error, en la cancelacion");
-                }
-              })
-              .catch(err => console.error);   
-            
-					} catch (err) {
-						console.log(err);
-					}
+          this.changeState(row,3)
 				}
 			});	
   
+    },
+    
+    changeState(row, estado){     
+      
+      let token = this.$store.state.user.token;
+      let opts = {
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+          }
+      };
+
+      try { 
+          axios.patch("http://localhost:8000/api/v1.0/reserves/"+row.actions+"/",
+          {
+            "estado":estado
+          },opts).then(response => {
+
+            let { status, data } = response;
+            
+            switch (status) {
+              case 200:
+                  row.status = estado === 3 ? "Cancelada":estado === 2 ? "Pagada" : "Pendiente";
+                  row.roomsObject.forEach(e => {
+                      axios.patch("http://localhost:8000/api/v1.0/rooms/"+e.id+"/",
+                      {
+                        "reservada":0
+                      },opts).then(response => {
+                        let { status, data } = response;
+                        switch (status) {
+                          case 200:
+                              console.log(row.status);
+                            break;
+                          default:
+                            console.log("Ocurrio un error, en el cambio de estado");
+                        }
+                      })
+                      .catch(err => console.error); 
+                  });
+                break;
+              default:
+                console.log("Ocurrio un error, en el cambio de estado");
+            }
+          })
+          .catch(err => console.error);   
+        
+      } catch (err) {
+        console.log(err);
+      }
     },
 
     resetModal() {
@@ -356,7 +361,7 @@ export default {
                     let { status, data } = response;
                     switch (status) {
                         case 201:
-                            // this.cancelReserve(this.currentRow);
+                            this.changeState(this.currentRow,2);
                             swal("Guardado","La reserva ha sido cobrada","success");    
                           break;
                         default:
