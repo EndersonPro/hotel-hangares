@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import mutations from './mutations';
 import { ui } from './modules/ui';
 import { user } from './modules/user';
 import { room } from './modules/room';
@@ -40,7 +39,7 @@ export default new Vuex.Store({
   },
   plugins: [
     createPersistedState({
-      paths: ['user', 'ui', 'room'],
+      paths: ['ui', 'room', 'user'],
       storage: {
         getItem: key => Cookies.get(key),
         setItem: (key, value) => Cookies.set(key, value),

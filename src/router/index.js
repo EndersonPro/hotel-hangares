@@ -82,21 +82,45 @@ function configRoutes() {
           path: '',
           name: 'Home',
           component: Home,
+          // meta: {
+          //   breadcrumbs: [{ text: 'Inicio', active: true }],
+          // },
         },
         {
           path: '/reserva',
           name: 'NewReserveClient',
           component: NewReserveClient,
+          meta: {
+            breadcrumbs: [
+              { text: 'Inicio', to: { name: 'Home' } },
+              { text: 'Reserva', active: true },
+            ],
+          },
         },
         {
           path: '/detalle-habitacion/:id',
           name: 'DetailRoom',
           component: DetailRoom,
+          meta: {
+            breadcrumbs: [
+              { text: 'Inicio', to: { name: 'Home' } },
+              { text: 'Reserva', to: { name: 'NewReserveClient' } },
+              { text: 'Detalle Habitación', active: true },
+            ],
+          },
         },
         {
           path: '/confirmar-reserva',
           name: 'ConfirmReservePage',
           component: ConfirmReservePage,
+          meta: {
+            breadcrumbs: [
+              { name: 'Inicio', to: { name: 'Home' } },
+              { name: 'Reserva', to: { name: 'NewReserveClient' } },
+              { name: 'Detalle Habitación', to: { name: 'NewReserveClient' } },
+              { name: 'Confirmar Reserva', active: true },
+            ],
+          },
         },
       ],
     },

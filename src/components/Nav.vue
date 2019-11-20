@@ -61,8 +61,9 @@
             </b-navbar-nav>
           </b-collapse>
         </b-navbar>
+        <custom-breadcrumbs></custom-breadcrumbs>
       </div>
-    </FixedHeader>
+      </FixedHeader>
     <div>
       <router-view></router-view>
     </div>
@@ -75,6 +76,7 @@ import { Action } from "@/store/const/room";
 import { Action as UserAction } from "@/store/const/user";
 import { createNamespacedHelpers } from "vuex";
 import FixedHeader from 'vue-fixed-header'
+import Breadcrumbs from "@/components/Breadcrumbs"
 
 const UIModule = createNamespacedHelpers("ui/");
 const roomModule = createNamespacedHelpers("room/");
@@ -93,7 +95,8 @@ export default {
     };
   },
   components:{
-    FixedHeader
+    FixedHeader,
+    'custom-breadcrumbs':Breadcrumbs
   },
   created(){
     window.addEventListener('scroll', e => {
@@ -151,6 +154,18 @@ export default {
 };
 </script>
 <style lang="scss">
+  .breadcrumb{
+      border: none !important;
+      background-color: rgba($color: #000000, $alpha: 0.1) !important;
+      margin: 0 !important;
+      padding: 0 1rem  !important;
+      li{
+        a{
+          color:rgba($color: #fff, $alpha: 0.7);
+        }
+      }
+      // padding: 0 !important;  
+  }
   .navhome{
     background-color: rgba($color: #000000, $alpha: 0.0);
   }
