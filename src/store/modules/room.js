@@ -76,7 +76,7 @@ export const room = {
         })
         .catch(err => console.error(err));
     },
-    async [Action.LIST_RESERVES]({ commit, dispatch }) {
+    async [Action.LIST_RESERVES]({ commit }) {
       var reserves = [];
       await axios
         .get('http://localhost:8000/api/v1.0/reserves/')
@@ -121,8 +121,15 @@ export const room = {
         })
         .catch(err => console.error);
     },
-    [Action.ADD_BOOKROOM]({ commit }, { room }) {
-      commit(Mutations.SET_BOOKROOM, room);
+    [Action.ADD_BOOKROOM]({ commit, state }, { room }) {
+      console.log('NO VEO');
+      console.log(state.bookRoom.includes(room));
+      if (state.bookRoom.includes()) {
+        console.log('VEAMOS');
+        throw new Error('Elemento repetido en el libro de habitaciones');
+      } else {
+        commit(Mutations.SET_BOOKROOM, room);
+      }
     },
     [Action.CLEAR_BOOKROOM]({ commit }) {
       commit(Mutations.DELETE_BOOKROOM);

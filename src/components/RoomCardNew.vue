@@ -1,26 +1,28 @@
 <template>
-    <!-- <div cols="4" class="card" :style="{ backgroundImage: 'url('+image+')' }">
-        {{ descripcion }}
-    </div> -->
-    <!-- <b-col cols="4"> -->
-        <b-card
-        :title="price"
+    <b-card
+        :title="room.precio"
         :img-src="image"
         img-alt="Image"
         img-top
-        style="width: 12rem;max-width: 12rem; transition: .5s all ease-in-out;"
+        style="max-width:25%; transition: .5s all ease-in-out;"
+        footer-tag="footer"
     >
+
     <b-card-text>
-    {{ descripcion }}
+        {{ room.descripcion }}
     </b-card-text>
-    <div class="d-flex justify-content-between align-items-center flex-row">
-        <b-button variant="outline-danger" id="fav" @click="addRoom" class="btn-book"><i class="fa fa-heart" ></i></b-button>
-        <b-tooltip target="fav" title="Añadir a Favoritos"></b-tooltip>    
-        <router-link class="btn btn-primary" :to="'/detalle-habitacion/'+ id">Ver Detalle</router-link>
-    </div>
-            <!-- <b-button href="#" variant="primary">Go somewhere</b-button> -->
-        </b-card>
-    <!-- </b-col> -->
+
+    <template v-slot:footer>
+        <div class="d-flex flex-row justify-content-between align-items-center">
+            <b-button variant="outline-danger" id="fav" @click="addRoom" class="btn-book"><i class="fa fa-heart" ></i></b-button>
+            <b-tooltip target="fav" title="Añadir a Favoritos"></b-tooltip>    
+            <router-link class="btn btn-primary" :to="'/detalle-habitacion/'+ room.id">Ver Detalle</router-link>
+        </div>
+    </template>
+
+
+
+    </b-card>
 </template>
 
 <script>
@@ -32,52 +34,36 @@ const roomModule = createNamespacedHelpers("room/");
 export default {
     name:"RoomCardNew",
     props: {
-        id:{
-            type:Number,
-            required: true
-        },
         image:{
             type: String,
             default: "https://www.the-connaught.co.uk/SysSiteAssets/rooms--suites/superior-queen-single-room/superior-queen-room---teaser.jpg?w=500&h=462&scale=both&mode=crop"
             },
-        price: {
-            type:String,
-            required: true
-        },
-        type:{
-            type:String,
-            required: true
-        },
-        number:{
-            type:Number,
-            required: true
-        },
-        reserved:{
-            type: Boolean,
-            // default: false,
-            required: true
-        },
-        descripcion:{
-            type:String,
-            required: true
-        }
+        room: Object
     },
     methods:{
         ...roomModule.mapActions([Action.ADD_BOOKROOM]),
 
         addRoom(){
+            // let room = {
+            //     id: this.id,
+            //     numero: this.number,
+            //     precio: this.price,
+            //     tipoHabitacion: this.type,
+            //     reservada: this.reserved,
+            //     descripcion: this.descripcion
+            // }
             let room = {
-                id: this.id,
-                numero: this.number,
-                precio: this.price,
-                tipoHabitacion: this.type,
-                reservada: this.reserved,
-                descripcion: this.descripcion
+                id: this.room.id,
+                numero: this.room.numero,
+                precio: this.room.precio,
+                tipoHabitacion: this.room.tipoHabitacion.nombre,
+                reservada: this.room.reservada,
+                descripcion: this.room.descripcion
             }
-            if (!this.reserved){
+            try {
                 this.ADD_BOOKROOM({room});
-            }else{
-                this.$swal('Habitacion Reservada','No puede agregar al Book Room esta habitacion',"error");
+            } catch (error) {
+                this.$swal('Habitacion ya se encuentra en el libro de habitaciones',error.message,"error");
             }
         }
     }

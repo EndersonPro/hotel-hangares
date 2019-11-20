@@ -1,22 +1,17 @@
 <template>
     <div class="bg-reservas">
-        <b-container>
+        <b-container class="d-flex flex-row align-content-center">
             <b-row class="d-flex flex-row align-content-center">
                 <b-col sm="12">
                     <SearchBarOld></SearchBarOld>
                 </b-col>
-                <b-row class="mt-2" v-if="getRooms != []">
-                    <b-col :key="room.id" v-for="room in getRooms" >
+                <b-card-group deck class="mt-2" v-if="getRooms != []">
                         <RoomCardNew
+                            :key="room.id" v-for="room in getRooms" 
                             :id="room.id"
-                            :price="room.precio"
-                            :type="room.tipoHabitacion.nombre"
-                            :number="room.numero"
-                            :reserved="room.reservada"
-                            :descripcion="room.descripcion"
+                            :room="room"
                         ></RoomCardNew>
-                    </b-col>
-                </b-row>
+                </b-card-group>
             </b-row>
         </b-container>
     </div>

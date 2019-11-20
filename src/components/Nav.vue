@@ -1,6 +1,6 @@
 <template>
   <div>
-    <FixedHeader>
+    <FixedHeader @change="updateFixedStatus">
       <div class="container_nav" v-bind:class="{ navhome: isViewHome,'nav-change-color-scroll':scrollY }" >
         <b-navbar toggleable="lg" type="dark" :variant="variantForRoute">
           <b-navbar-brand  href="#"><router-link to="/" v-bind:class="{ colorLogo: scrollY }">HH</router-link></b-navbar-brand>
@@ -10,11 +10,11 @@
           <b-collapse id="nav-collapse" is-nav>
             <!-- Right aligned nav items -->
             <b-navbar-nav class="ml-auto">
-              <b-nav-item href="#">Home</b-nav-item>
-              <b-nav-item href="#">Item 1</b-nav-item>
+              <b-nav-item><router-link style="color:white" to="/">Inicio</router-link></b-nav-item>
+              <!-- <b-nav-item href="#">Item 1</b-nav-item>
               <b-nav-item href="#">Item 2</b-nav-item>
               <b-nav-item href="#">Item 3</b-nav-item>
-              <b-nav-item href="#">Item 4</b-nav-item>
+              <b-nav-item href="#">Item 4</b-nav-item> -->
 
               <!-- <b-nav-item href="#" disabled>Disabled</b-nav-item> -->
 
@@ -86,7 +86,10 @@ export default {
     return {
       languages: ["ES", "US", "RU", "FR"],
       router: this.$router,
-      scrollY: false
+      scrollY: false,
+      fixedStatus: {
+        headerIsFixed: false
+      },
     };
   },
   components:{
@@ -133,6 +136,9 @@ export default {
     EmptyListRoom(){
         this[Action.CLEAR_BOOKROOM]();
     },
+    updateFixedStatus(next) {
+      this.fixedStatus.headerIsFixed = next
+    },
   },
   // watch: {
   //   bookRoom(newBookRoom, oldBookRoom) {
@@ -146,25 +152,29 @@ export default {
 </script>
 <style lang="scss">
   .navhome{
-    transition: .5s all ease-in-out;
     background-color: rgba($color: #000000, $alpha: 0.0);
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100vw;
+  }
+
+  .container.headerIsFixed {
+    transform: translateY(1000px) !important;
   }
 
   .colorLogo{
     color: white;
   }
 
-  .container_nav.vue-fixed-header--isFixed {
+  .container_nav{
+    transition: .5s all ease-in-out;
     position: fixed;
     left: 0;
     top: 0;
     width: 100vw;
+  }
+
+  .container_nav.vue-fixed-header--isFixed {
     z-index: 99999;
   }
+
   .nav-change-color-scroll{
     transition: .5s all ease-in-out;
     background-color: #20a8d8;
@@ -179,4 +189,5 @@ export default {
     z-index: 99999;
     background-color: #20a8d8;
   }
+
 </style>

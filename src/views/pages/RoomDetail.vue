@@ -1,27 +1,29 @@
 <template>
-    <div>
-        <b-row style="height:80vh">
-            <b-col cols="4" md="4">
-                <b-carousel
-                    id="carousel-fade"
-                    style="height:80vh;text-shadow: 0px 0px 2px #000"
-                    fade
-                    indicators
-                    img-width="1000"
-                    img-height="1200"
-                    >
-                    <b-carousel-slide
-                    img-src="https://picsum.photos/1000/1200/?image=10"
-                    ></b-carousel-slide>
-                    <b-carousel-slide
-                    img-src="https://picsum.photos/1000/1200/?image=12"
-                    ></b-carousel-slide>
-                    <b-carousel-slide
-                    img-src="https://picsum.photos/1000/1200/?image=22"
-                    ></b-carousel-slide>
-                </b-carousel>
-            </b-col>
-            <b-col cols="8" md="8"  class="bg-light content pt-3 pb-3 pl-4 pr-4 d-flex flex-column justify-content-between">
+    <div style="height:100vh;" class="d-flex flex-column justify-content-center">
+        <b-row>
+            <b-col class="bg-light d-flex flex-row justify-content-between">
+                <div style="max-width:35%">
+                    <b-carousel
+                        id="carousel-fade"
+                        fade
+                        indicators
+                        img-width="1000"
+                        img-height="1500"
+                        :interval="200000"
+                        controls
+                        >
+                        <b-carousel-slide
+                            img-src="https://picsum.photos/1000/1500/?image=11"
+                        ></b-carousel-slide>
+                        <b-carousel-slide
+                            img-src="https://picsum.photos/1000/1500/?image=17"
+                        ></b-carousel-slide>
+                        <b-carousel-slide
+                            img-src="https://picsum.photos/1000/1500/?image=20"
+                        ></b-carousel-slide>
+                    </b-carousel>
+                </div>
+                <div class="content pt-3 pb-3 pl-4 pr-4 d-flex flex-column justify-content-between">
                     <h4 class="text-center"> {{ room.tipoHabitacion.descripcion }} </h4>
                     <p class="des-crip-tion">
                         {{ room.descripcion }}
@@ -46,6 +48,7 @@
                 <div class="d-flex flex-row justify-content-between">
                     <div>Stars</div>
                     <b-button variant="info" @click="addRoom">Reservar</b-button>
+                </div>
                 </div>
             </b-col>
         </b-row>
@@ -75,27 +78,24 @@ export default {
             }
         }
     },
-    created(){
-        console.log(this.room)
-    },
     methods: {
         ...roomModule.mapActions([Action.ADD_BOOKROOM]),
         addRoom(){
-            console.log("Entrando en addRoom")
             let room = {
                 id: this.room.id,
-                numero: this.room.number,
-                precio: this.room.price,
-                tipoHabitacion: this.room.type,
-                reservada: this.room.reserved,
+                numero: this.room.numero,
+                precio: this.room.precio,
+                tipoHabitacion: this.room.tipoHabitacion.nombre,
+                reservada: this.room.reservada,
                 descripcion: this.room.descripcion
             }
-            if (!this.reserved){
+            // console.log(room)
+            if (!this.room.reservada){
                 try {
                     this.ADD_BOOKROOM({room});
                     this.$router.push({path:'/confirmar-reserva'});
                 } catch (error) {
-                    
+                     this.$swal('Habitacion ya se encuentra en el libro de habitaciones',error.message,"error");
                 }
 
             }else{
