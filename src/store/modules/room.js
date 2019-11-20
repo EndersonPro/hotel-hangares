@@ -33,18 +33,18 @@ export const room = {
   actions: {
     async [Action.FILTER_DATE]({ commit }, { reserveParams }) {
       await axios
-        .get('http://localhost:8000/api/v1.0/reserves/', {
+        .get('http://localhost:8000/api/v1.0/rooms/', {
           params: reserveParams,
         })
         .then(response => {
           let { status, data } = response;
           switch (status) {
             case 200:
-              var rooms = [];
-              data.forEach(element => {
-                rooms.push(...element.habitaciones);
-              });
-              commit(Mutations.SET_ROOMS, rooms);
+              // var rooms = [];
+              // data.forEach(element => {
+              //   rooms.push(...element.habitaciones);
+              // });
+              commit(Mutations.SET_ROOMS, data);
               break;
             default:
               console.log('Ocurrio un error al cargar las habitaciones');
