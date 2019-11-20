@@ -50,7 +50,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 
-
 .testimony {
   position: relative;
   padding: 2em;

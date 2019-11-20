@@ -41,7 +41,7 @@
   <SearchBar></SearchBar>
 <Services></Services> -->
 <!-- <SearchBar></SearchBar> -->
- <div id="colorlib-rooms" class="colorlib-light-grey">
+ <!-- <div id="colorlib-rooms" class="colorlib-light-grey">
     <b-container>
   			<b-row>
 					<div class="col-md-12 text-center colorlib-heading">
@@ -54,10 +54,12 @@
         <RoomCard v-for="r in items" :id="r.id" :type="r.tipoHabitacion.nombre" :number="r.numero" :price="Number(r.precio)" :reserved="r.reservada" :key="r.id"></RoomCard>
       </b-row>
     </b-container>
-  </div>
+</div> -->
   <!-- <Reserves></Reserves>  -->
   <Services></Services>
   <Testimonials></Testimonials>
+  <DiningBar></DiningBar>
+  <Footer></Footer>
 </div>
 </template>
 
@@ -68,7 +70,9 @@ import SearchBar from "@/components/SearchBar";
 import Services from "@/components/Services";
 import RoomCard from "@/components/RoomCard";
 import Testimonials from "@/components/Testimonials";
+import DiningBar from "@/components/DiningBar";
 import Reserves from "@/components/Reserves";
+import Footer from "@/components/Footer";
 
 import { Action } from "@/store/const/room";
 import { createNamespacedHelpers } from "vuex";
@@ -102,12 +106,14 @@ export default {
     SearchBar,
     RoomCard,
     Testimonials,
-    Reserves
+    Reserves,
+    DiningBar,
+    Footer 
   }
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 
 .bg_hotel {
   background: linear-gradient(122.09deg, #3c3a3a 0%, rgba(0, 0, 0, 0.14) 99.2%),
@@ -151,10 +157,11 @@ export default {
 
 .colorlib-light-grey {
   background: #fafafa; }
-
+#colorlib-dining-bar,
 #colorlib-services,
 #colorlib-reserves,
-#colorlib-rooms {
+#colorlib-rooms,
+#colorlib-footer  {
 
   padding: 6em 0;
   clear: both; }
