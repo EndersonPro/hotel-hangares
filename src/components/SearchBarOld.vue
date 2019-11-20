@@ -13,7 +13,7 @@
 		                    <label for="adults">Orden de precio</label>
 		                    <div class="form-field">
 		                      <i class="icon icon-arrow-down3"></i>
-		                      <b-form-select  v-model="order" :options="optionsOrder" class="form-control"></b-form-select>
+		                      <b-form-select v-model="order" :options="optionsOrder" class="form-control"></b-form-select>
 		                    </div>
 		                  </b-form-group>
 		              </b-col>
@@ -81,8 +81,8 @@ export default {
           order:null,
           optionsOrder:[
             { value: null, text: 'Selecciona una opción' },
-            { value: 'mayor', text: 'Mayor' },
-            { value: 'menor', text: 'Menor' }
+            { value: 'asc', text: 'Menor a mayor' },
+            { value: 'desc', text: 'Mayor a menor' }
           ],
           optionsType:[
             { value: null, text: 'Selecciona una opción' },
@@ -102,16 +102,17 @@ export default {
           }
           let reserveParams ={
             fechaInicio: moment(this.checkIn).format("YYYY-MM-DD"),
-            fechaFin: moment(this.checkOut).format("YYYY-MM-DD")
+            fechaFin: moment(this.checkOut).format("YYYY-MM-DD"),
+            tipoHabitacion: this.typeRoom
           }
           console.log(reserveParams);
 
-          var reserved = 0;
+          // var reserved = 0;
           try {
             if (this.checkIn!="" && this.checkOut !=""){
               this.FILTER_DATE({reserveParams});
             }else{
-              this.FILTER_RESERVED({roomParams});
+              this.FILTER_RESERVED({ roomParams });
             }
             
           } catch (error) {
@@ -119,19 +120,14 @@ export default {
           }
         
       }
-
     },
-    mounted(){
-        // let roomParams = {
-        //     reservada: null,
-        //     tipoHabitacion: null
-        // }
-        // try {
-        //   this.FILTER_RESERVED({roomParams});
-        // } catch (error) {
-        //   console.log(error);
-        // }
-    }
+    watch:{
+      order: function(newValue, oldValue){
+        console.log(oldValue, newValue);
+        console.log(this.$store.state.room.orderBy);
+        this.$store.state.room.orderBy = newValue
+      }
+    },
 }
 </script>
 <style lang="scss" scoped>

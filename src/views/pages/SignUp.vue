@@ -404,7 +404,8 @@ export default {
           // console.log(data);
           switch (status) {
             case 201:
-              console.log("Entre con estatus 201");
+              // console.log("Entre con estatus 201");
+              this.$router.push("/");
               if(this.$store.state.user.token==null){
                 this[Action.USER_SIGNUP]({ data, body });
               }

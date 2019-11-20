@@ -328,6 +328,9 @@ export default {
           }
         )
       });
+      if(this.idReserve == 4){
+        this.descuento = 7.5;
+      }
       this.total = this.subTotal - this.descuento;
     },
     saveBill(){
@@ -339,6 +342,7 @@ export default {
             "Authorization": `Bearer ${token}`
           }
       };
+      
       let bill = {
         fecha: this.fecha,
         descuento: this.descuento,

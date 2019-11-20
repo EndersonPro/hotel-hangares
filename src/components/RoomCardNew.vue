@@ -1,6 +1,6 @@
 <template>
     <b-card
-        :title="room.precio"
+        :title="room.precio.toString()"
         :img-src="image"
         img-alt="Image"
         img-top

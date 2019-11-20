@@ -20,6 +20,7 @@
                                 <i class="fa fa-dollar" ></i>
                                 {{ room.precio }}
                             </span>
+                            <b-button variant="danger" @click="handlerDelete(room)"> <i class="fa fa-trash"></i> </b-button>
                         </b-list-group-item>
                     </b-list-group>
                 </b-col>
@@ -57,7 +58,7 @@ export default {
         ...userModule.mapGetters(["getToken","getUser"])
     },
     methods:{
-        ...RoomModule.mapActions(["CLEAR_BOOKROOM"]),
+        ...RoomModule.mapActions(["CLEAR_BOOKROOM", "QUITAR_DE_BOOK"]),
     async saveOne(reserve){
         let token = this.getToken;
         let opts = {
@@ -87,6 +88,7 @@ export default {
                           switch (status) {
                             case 201:
                                 this.CLEAR_BOOKROOM();
+                                this.$router.push('/reserva');
                               break;
                             default:
                               console.log("Ocurrio un error, en la asignacion");
@@ -138,6 +140,10 @@ export default {
             });
       }
     },
+    handlerDelete(room){
+      // console.log(room.id)
+      this.QUITAR_DE_BOOK(room);
+    }
     }
 }
 </script>

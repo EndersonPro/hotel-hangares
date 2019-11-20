@@ -115,10 +115,10 @@ function configRoutes() {
           component: ConfirmReservePage,
           meta: {
             breadcrumbs: [
-              { name: 'Inicio', to: { name: 'Home' } },
-              { name: 'Reserva', to: { name: 'NewReserveClient' } },
-              { name: 'Detalle Habitación', to: { name: 'NewReserveClient' } },
-              { name: 'Confirmar Reserva', active: true },
+              { text: 'Inicio', to: { name: 'Home' } },
+              { text: 'Reserva', to: { name: 'NewReserveClient' } },
+              { text: 'Detalle Habitación', to: { name: 'NewReserveClient' } },
+              { text: 'Confirmar Reserva', active: true },
             ],
           },
         },

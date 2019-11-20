@@ -8,14 +8,25 @@ export const room = {
     rooms: [],
     bookRoom: [],
     reserves: [],
+    orderBy: 'desc',
   },
   getters: {
-    getRooms: state => state.rooms,
+    getRooms: function(state) {
+      console.log(state.rooms);
+      return _.orderBy(state.rooms, ['precio'], [state.orderBy]);
+    },
     getBookRoom: state => state.bookRoom,
   },
   mutations: {
     [Mutations.SET_ROOMS](state, rooms) {
-      state.rooms = rooms;
+      let auxRooms = rooms.map(room => {
+        console.log(parseFloat(room.precio));
+        return {
+          ...room,
+          precio: parseFloat(room.precio),
+        };
+      });
+      state.rooms = auxRooms;
     },
     [Mutations.SET_RESERVES](state, reserves) {
       state.reserves = reserves;
@@ -28,6 +39,9 @@ export const room = {
     },
     [Mutations.resetRoomList](state) {
       state.rooms = [];
+    },
+    quitarBook(state, id) {
+      state.bookRoom = state.bookRoom.filter(room => room.id !== id);
     },
   },
   actions: {
@@ -140,6 +154,9 @@ export const room = {
     },
     [Action.RESET_ROOM_LIST]({ commit }) {
       commit(Mutations.resetRoomList);
+    },
+    QUITAR_DE_BOOK({ commit }, { id }) {
+      commit('quitarBook', id);
     },
   },
 };
